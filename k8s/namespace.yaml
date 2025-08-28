@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fraudguard
+  labels:
+    name: fraudguard
+    environment: production
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fraudguard-staging
+  labels:
+    name: fraudguard-staging
+    environment: staging

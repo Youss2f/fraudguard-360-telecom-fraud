@@ -1,0 +1,381 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User management
+model User {
+  id          String   @id @default(cuid())
+  username    String   @unique
+  email       String   @unique
+  password    String   // bcrypt hashed
+  role        UserRole @default(ANALYST)
+  permissions String[] // JSON array of permissions
+  isActive    Boolean  @default(true)
+  lastLogin   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  sessions      Session[]
+  investigations Investigation[]
+  auditLogs     AuditLog[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  ipAddress String?
+  userAgent String?
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// Subscriber data
+model Subscriber {
+  id          String   @id @default(cuid())
+  msisdn      String   @unique // Phone number
+  imsi        String?  @unique // International Mobile Subscriber Identity
+  imei        String?  // Device identifier
+  firstName   String?
+  lastName    String?
+  email       String?
+  address     String?
+  dateOfBirth DateTime?
+  nationality String?
+  idNumber    String?
+  
+  // Telecom specific
+  networkOperator String?
+  planType        String?
+  activationDate  DateTime?
+  status          SubscriberStatus @default(ACTIVE)
+  
+  // Risk assessment
+  riskScore       Float    @default(0.0)
+  riskLevel       RiskLevel @default(LOW)
+  lastRiskUpdate  DateTime @default(now())
+  
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  callRecords    CallRecord[]
+  smsRecords     SmsRecord[]
+  dataRecords    DataRecord[]
+  fraudAlerts    FraudAlert[]
+  investigations Investigation[]
+  riskProfiles   RiskProfile[]
+
+  @@map("subscribers")
+}
+
+// Call Detail Records
+model CallRecord {
+  id           String   @id @default(cuid())
+  subscriberId String
+  callType     CallType
+  direction    CallDirection
+  
+  // Call details
+  callingNumber  String
+  calledNumber   String
+  startTime      DateTime
+  endTime        DateTime?
+  duration       Int?     // seconds
+  
+  // Location data
+  cellId         String?
+  locationAreaCode String?
+  latitude       Float?
+  longitude      Float?
+  
+  // Billing
+  cost           Float?
+  currency       String?
+  
+  // Fraud indicators
+  isRoaming      Boolean @default(false)
+  isInternational Boolean @default(false)
+  riskScore      Float   @default(0.0)
+  
+  createdAt DateTime @default(now())
+
+  // Relations
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+  fraudAlerts FraudAlert[]
+
+  @@map("call_records")
+}
+
+// SMS Records
+model SmsRecord {
+  id           String   @id @default(cuid())
+  subscriberId String
+  direction    SmsDirection
+  
+  // SMS details
+  senderNumber   String
+  receiverNumber String
+  message        String?
+  timestamp      DateTime
+  
+  // Location
+  cellId         String?
+  latitude       Float?
+  longitude      Float?
+  
+  // Fraud indicators
+  isSpam         Boolean @default(false)
+  riskScore      Float   @default(0.0)
+  
+  createdAt DateTime @default(now())
+
+  // Relations
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+
+  @@map("sms_records")
+}
+
+// Data Usage Records
+model DataRecord {
+  id           String   @id @default(cuid())
+  subscriberId String
+  
+  // Data session details
+  sessionStart DateTime
+  sessionEnd   DateTime?
+  bytesUp      BigInt
+  bytesDown    BigInt
+  
+  // Network details
+  apn          String?
+  cellId       String?
+  latitude     Float?
+  longitude    Float?
+  
+  // Fraud indicators
+  riskScore    Float @default(0.0)
+  
+  createdAt DateTime @default(now())
+
+  // Relations
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+
+  @@map("data_records")
+}
+
+// Fraud Detection
+model FraudAlert {
+  id           String      @id @default(cuid())
+  subscriberId String
+  alertType    AlertType
+  severity     AlertSeverity
+  
+  // Alert details
+  title        String
+  description  String
+  riskScore    Float
+  confidence   Float
+  
+  // Evidence
+  evidenceData Json // Flexible JSON for different evidence types
+  
+  // Status
+  status       AlertStatus @default(OPEN)
+  assignedTo   String?
+  resolvedAt   DateTime?
+  resolution   String?
+  
+  // Related records
+  callRecordId String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  subscriber Subscriber  @relation(fields: [subscriberId], references: [id])
+  callRecord CallRecord? @relation(fields: [callRecordId], references: [id])
+  investigation Investigation?
+
+  @@map("fraud_alerts")
+}
+
+// Risk Profiling
+model RiskProfile {
+  id           String   @id @default(cuid())
+  subscriberId String
+  
+  // Behavioral patterns
+  avgCallDuration    Float?
+  avgDailyCalls      Float?
+  avgDailySms        Float?
+  avgDataUsage       Float?
+  
+  // Geographic patterns
+  homeLocationLat    Float?
+  homeLocationLng    Float?
+  usualLocations     Json // Array of frequent locations
+  
+  // Temporal patterns
+  activeHours        Json // Array of active hour ranges
+  activeDays         Json // Array of active days
+  
+  // Risk indicators
+  velocityScore      Float @default(0.0)
+  locationScore      Float @default(0.0)
+  behaviorScore      Float @default(0.0)
+  deviceScore        Float @default(0.0)
+  
+  // Metadata
+  profileDate DateTime @default(now())
+  isActive    Boolean  @default(true)
+
+  // Relations
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id])
+
+  @@map("risk_profiles")
+}
+
+// Investigation Management
+model Investigation {
+  id          String            @id @default(cuid())
+  caseNumber  String            @unique
+  title       String
+  description String
+  priority    InvestigationPriority @default(MEDIUM)
+  status      InvestigationStatus   @default(OPEN)
+  
+  // Assignment
+  assignedTo  String
+  createdBy   String
+  
+  // Related data
+  subscriberId String?
+  fraudAlertId String? @unique
+  
+  // Timeline
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  closedAt    DateTime?
+  
+  // Relations
+  assignedUser User        @relation(fields: [assignedTo], references: [id])
+  subscriber   Subscriber? @relation(fields: [subscriberId], references: [id])
+  fraudAlert   FraudAlert? @relation(fields: [fraudAlertId], references: [id])
+
+  @@map("investigations")
+}
+
+// Audit Logging
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  resource  String
+  details   Json?
+  ipAddress String?
+  userAgent String?
+  timestamp DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  ANALYST
+  INVESTIGATOR
+  VIEWER
+  DEMO
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  SUSPENDED
+  TERMINATED
+  PENDING
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum CallType {
+  VOICE
+  VIDEO
+  CONFERENCE
+}
+
+enum CallDirection {
+  INCOMING
+  OUTGOING
+}
+
+enum SmsDirection {
+  INCOMING
+  OUTGOING
+}
+
+enum AlertType {
+  VELOCITY_FRAUD
+  LOCATION_ANOMALY
+  DEVICE_FRAUD
+  BEHAVIORAL_ANOMALY
+  ROAMING_FRAUD
+  PREMIUM_RATE_FRAUD
+  SPAM_DETECTION
+  ACCOUNT_TAKEOVER
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AlertStatus {
+  OPEN
+  INVESTIGATING
+  RESOLVED
+  FALSE_POSITIVE
+  CLOSED
+}
+
+enum InvestigationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum InvestigationStatus {
+  OPEN
+  IN_PROGRESS
+  PENDING_REVIEW
+  RESOLVED
+  CLOSED
+}
