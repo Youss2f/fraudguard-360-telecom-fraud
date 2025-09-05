@@ -1,4 +1,5 @@
 # Rapport du Stage
+
 ## Système d'Analyse de Fraude
 
 ---
@@ -20,52 +21,56 @@
 **Introduction générale** .................................................................................... 1
 
 ### Chapitre 1 Présentation générale du projet .................................................... 3
-1.1    Introduction ................................................................................................ 3
-1.2    Présentation de l'organisme d'accueil ........................................................ 3
-   1.2.1 Description de la Fondation .................................................................. 3
-   1.2.2 Présentation de l'Institution Mohammed VI .......................................... 4
-1.3    Cadre général du projet .............................................................................. 5
-   1.3.1 Présentation du projet .......................................................................... 5
-   1.3.2 Problématique ...................................................................................... 5
-   1.3.3 Solution ............................................................................................... 5
-   1.3.4 Mission ................................................................................................ 5
-1.4    Conduite du projet ..................................................................................... 6
-   1.4.1 Méthodologie adoptée - Gestion de Projet Individuelle avec Outils de Suivi .... 6
-   1.4.2 Planification et organisation du projet .................................................. 8
-1.5    Conclusion ................................................................................................. 9
+
+1.1 Introduction ................................................................................................ 3
+1.2 Présentation de l'organisme d'accueil ........................................................ 3
+1.2.1 Description de la Fondation .................................................................. 3
+1.2.2 Présentation de l'Institution Mohammed VI .......................................... 4
+1.3 Cadre général du projet .............................................................................. 5
+1.3.1 Présentation du projet .......................................................................... 5
+1.3.2 Problématique ...................................................................................... 5
+1.3.3 Solution ............................................................................................... 5
+1.3.4 Mission ................................................................................................ 5
+1.4 Conduite du projet ..................................................................................... 6
+1.4.1 Méthodologie adoptée - Gestion de Projet Individuelle avec Outils de Suivi .... 6
+1.4.2 Planification et organisation du projet .................................................. 8
+1.5 Conclusion ................................................................................................. 9
 
 ### Chapitre 2 Analyse et conception .................................................................. 10
-2.1    Introduction .............................................................................................. 10
-2.2    Étude Fonctionnelle ................................................................................. 10
-2.3    Spécification des besoins fonctionnels ..................................................... 10
-2.4    Spécification des besoins non-fonctionnels .............................................. 10
-2.5    Analyse des besoins ................................................................................. 10
-2.5.1  Diagramme de cas d'utilisation ............................................................. 11
-2.5.2  Analyse des cas d'utilisation ................................................................. 11
-2.5.3  Diagrammes de séquence système ....................................................... 14
-2.6    Étude Conceptuelle .................................................................................. 17
-2.6.1  Diagrammes de classes ........................................................................ 17
-2.6.2  Diagrammes de séquence détaillées ..................................................... 23
-2.6.3  Diagrammes d'activités ........................................................................ 26
-2.7    Conclusion ............................................................................................... 29
+
+2.1 Introduction .............................................................................................. 10
+2.2 Étude Fonctionnelle ................................................................................. 10
+2.3 Spécification des besoins fonctionnels ..................................................... 10
+2.4 Spécification des besoins non-fonctionnels .............................................. 10
+2.5 Analyse des besoins ................................................................................. 10
+2.5.1 Diagramme de cas d'utilisation ............................................................. 11
+2.5.2 Analyse des cas d'utilisation ................................................................. 11
+2.5.3 Diagrammes de séquence système ....................................................... 14
+2.6 Étude Conceptuelle .................................................................................. 17
+2.6.1 Diagrammes de classes ........................................................................ 17
+2.6.2 Diagrammes de séquence détaillées ..................................................... 23
+2.6.3 Diagrammes d'activités ........................................................................ 26
+2.7 Conclusion ............................................................................................... 29
 
 ### Chapitre 3 Étude technique .......................................................................... 31
-3.1    Introduction ............................................................................................. 31
-3.2    Environnement de Développement ........................................................... 31
-3.2.1  IDE (Integrated Development Environment) .......................................... 31
-3.2.2  Serveurs de Développement ................................................................ 32
-3.3    Choix des Technologies ............................................................................ 33
-3.3.1  Langages de Programmation ................................................................ 33
-3.3.2  Frameworks et Bibliothèques ............................................................... 35
-3.4    Conclusion .............................................................................................. 36
+
+3.1 Introduction ............................................................................................. 31
+3.2 Environnement de Développement ........................................................... 31
+3.2.1 IDE (Integrated Development Environment) .......................................... 31
+3.2.2 Serveurs de Développement ................................................................ 32
+3.3 Choix des Technologies ............................................................................ 33
+3.3.1 Langages de Programmation ................................................................ 33
+3.3.2 Frameworks et Bibliothèques ............................................................... 35
+3.4 Conclusion .............................................................................................. 36
 
 ### Chapitre 4 Réalisation ................................................................................. 37
-4.1    Introduction ............................................................................................ 37
-4.2    Développement des Fonctionnalités ........................................................ 37
-4.3    Intégration des Composants .................................................................... 39
-4.4    Défis Rencontrés et Solutions ................................................................. 39
-4.5    Documentation et Suivi ........................................................................... 40
-4.6    Conclusion ............................................................................................. 40
+
+4.1 Introduction ............................................................................................ 37
+4.2 Développement des Fonctionnalités ........................................................ 37
+4.3 Intégration des Composants .................................................................... 39
+4.4 Défis Rencontrés et Solutions ................................................................. 39
+4.5 Documentation et Suivi ........................................................................... 40
+4.6 Conclusion ............................................................................................. 40
 
 **Conclusion et perspectives** ............................................................................ I
 Conclusion ........................................................................................................ I
@@ -126,6 +131,7 @@ Ce rapport présente le travail réalisé durant mon stage de fin d'études au s
 ### Problématique
 
 Les systèmes traditionnels de détection de fraude présentent plusieurs limitations :
+
 - Taux élevé de faux positifs entraînant des blocages injustifiés
 - Temps de traitement important pour l'analyse des transactions
 - Difficulté à s'adapter aux nouvelles techniques de fraude
@@ -134,6 +140,7 @@ Les systèmes traditionnels de détection de fraude présentent plusieurs limita
 ### Objectifs du projet
 
 Ce stage vise à développer une solution moderne répondant aux défis suivants :
+
 1. **Améliorer la précision** de détection des activités frauduleuses
 2. **Réduire les faux positifs** grâce à des algorithmes d'apprentissage automatique
 3. **Optimiser les performances** pour traiter un volume important de transactions
@@ -173,6 +180,7 @@ Ce chapitre présente le cadre général du stage, l'organisme d'accueil, ainsi 
 **Vision :** Devenir le leader mondial des solutions de sécurité financière basées sur l'intelligence artificielle.
 
 **Valeurs :**
+
 - Innovation technologique
 - Excellence opérationnelle
 - Sécurité et confidentialité
@@ -183,6 +191,7 @@ Ce chapitre présente le cadre général du stage, l'organisme d'accueil, ainsi 
 L'institution s'inscrit dans le cadre des initiatives de modernisation du secteur financier marocain, en partenariat avec les principales banques et institutions financières du royaume. Elle bénéficie du soutien de la Banque Centrale et des autorités de régulation financière.
 
 **Domaines d'expertise :**
+
 - Analyse comportementale des transactions
 - Intelligence artificielle appliquée à la finance
 - Cybersécurité et protection des données
@@ -195,6 +204,7 @@ L'institution s'inscrit dans le cadre des initiatives de modernisation du secteu
 Le projet "Système d'Analyse de Fraude" vise à développer une plateforme complète de détection et d'analyse des activités frauduleuses en temps réel. Cette solution s'adresse aux institutions financières souhaitant moderniser leurs systèmes de sécurité.
 
 **Périmètre du projet :**
+
 - Développement d'une application web responsive
 - Intégration d'algorithmes de machine learning
 - Création d'un tableau de bord analytique
@@ -216,18 +226,21 @@ Les institutions financières font face à plusieurs défis majeurs :
 Notre solution propose une approche innovante basée sur :
 
 **Architecture moderne :**
+
 - Frontend React/Next.js pour une interface utilisateur moderne
 - Backend Node.js avec API REST sécurisées
 - Base de données PostgreSQL pour la persistance
 - Redis pour la mise en cache haute performance
 
 **Intelligence artificielle :**
+
 - Algorithmes de machine learning pour la détection de patterns
 - Analyse comportementale des utilisateurs
 - Scoring de risque en temps réel
 - Apprentissage continu pour s'adapter aux nouvelles menaces
 
 **Fonctionnalités avancées :**
+
 - Dashboard analytique avec visualisations interactives
 - Système d'alertes multi-canal (email, SMS, push)
 - Rapports automatisés et personnalisables
@@ -259,12 +272,12 @@ Pour mener à bien ce projet, j'ai adopté une méthodologie agile adaptée au c
 
 **Outils de gestion utilisés :**
 
-| Outil | Usage | Avantages |
-|-------|-------|-----------|
-| Jira | Gestion des tâches et sprints | Traçabilité, reporting |
-| Git/GitHub | Versioning du code | Historique, collaboration |
-| Confluence | Documentation | Centralisation, partage |
-| Slack | Communication | Réactivité, intégration |
+| Outil      | Usage                         | Avantages                 |
+| ---------- | ----------------------------- | ------------------------- |
+| Jira       | Gestion des tâches et sprints | Traçabilité, reporting    |
+| Git/GitHub | Versioning du code            | Historique, collaboration |
+| Confluence | Documentation                 | Centralisation, partage   |
+| Slack      | Communication                 | Réactivité, intégration   |
 
 **Processus de développement :**
 
@@ -279,36 +292,42 @@ Pour mener à bien ce projet, j'ai adopté une méthodologie agile adaptée au c
 Le projet s'étend sur une période de [durée] semaines, organisée en 6 phases principales :
 
 **Phase 1 : Analyse et étude préliminaire (Semaines 1-2)**
+
 - Étude de l'existant et analyse des besoins
 - Recherche technologique et benchmarking
 - Définition de l'architecture générale
 - Rédaction des spécifications fonctionnelles
 
 **Phase 2 : Conception détaillée (Semaines 3-4)**
+
 - Modélisation UML (cas d'utilisation, classes, séquences)
 - Conception de la base de données
 - Définition des API et interfaces
 - Prototypage de l'interface utilisateur
 
 **Phase 3 : Développement du backend (Semaines 5-7)**
+
 - Mise en place de l'architecture Node.js
 - Développement des API REST
 - Intégration de la base de données PostgreSQL
 - Implémentation des algorithmes de détection
 
 **Phase 4 : Développement du frontend (Semaines 8-10)**
+
 - Création de l'interface utilisateur avec Next.js
 - Intégration des composants de visualisation
 - Développement du dashboard analytique
 - Tests d'intégration frontend/backend
 
 **Phase 5 : Tests et optimisation (Semaines 11-12)**
+
 - Tests unitaires et d'intégration
 - Tests de performance et de charge
 - Optimisation des requêtes et algorithmes
 - Correction des bugs identifiés
 
 **Phase 6 : Déploiement et documentation (Semaines 13-14)**
+
 - Préparation de l'environnement de production
 - Déploiement et mise en service
 - Rédaction de la documentation technique
@@ -316,23 +335,23 @@ Le projet s'étend sur une période de [durée] semaines, organisée en 6 phases
 
 **Livrables par phase :**
 
-| Phase | Livrables principaux |
-|-------|---------------------|
-| 1 | Cahier des charges, Architecture générale |
-| 2 | Modèles UML, Maquettes UI/UX |
-| 3 | API fonctionnelles, Base de données |
-| 4 | Interface utilisateur complète |
-| 5 | Application testée et optimisée |
-| 6 | Système déployé, Documentation |
+| Phase | Livrables principaux                      |
+| ----- | ----------------------------------------- |
+| 1     | Cahier des charges, Architecture générale |
+| 2     | Modèles UML, Maquettes UI/UX              |
+| 3     | API fonctionnelles, Base de données       |
+| 4     | Interface utilisateur complète            |
+| 5     | Application testée et optimisée           |
+| 6     | Système déployé, Documentation            |
 
 **Gestion des risques :**
 
-| Risque | Probabilité | Impact | Mitigation |
-|--------|-------------|--------|------------|
-| Retard développement | Moyenne | Élevé | Buffer temps, priorisation |
-| Problèmes techniques | Faible | Moyen | Veille technologique, POC |
-| Changement besoins | Faible | Moyen | Communication régulière |
-| Indisponibilité ressources | Faible | Élevé | Plan de continuité |
+| Risque                     | Probabilité | Impact | Mitigation                 |
+| -------------------------- | ----------- | ------ | -------------------------- |
+| Retard développement       | Moyenne     | Élevé  | Buffer temps, priorisation |
+| Problèmes techniques       | Faible      | Moyen  | Veille technologique, POC  |
+| Changement besoins         | Faible      | Moyen  | Communication régulière    |
+| Indisponibilité ressources | Faible      | Élevé  | Plan de continuité         |
 
 ### 1.5 Conclusion
 
@@ -369,30 +388,30 @@ L'étude fonctionnelle vise à identifier et analyser les fonctionnalités que d
 
 ### 2.3 Spécification des besoins fonctionnels
 
-| ID | Fonctionnalité | Description | Priorité |
-|----|----------------|-------------|----------|
-| RF01 | Authentification | Connexion sécurisée avec gestion des rôles | Haute |
-| RF02 | Dashboard principal | Vue d'ensemble des alertes et statistiques | Haute |
-| RF03 | Analyse temps réel | Traitement des transactions en temps réel | Haute |
-| RF04 | Gestion des alertes | Création, assignation et suivi des alertes | Haute |
-| RF05 | Scoring de risque | Calcul automatique du score de risque | Haute |
-| RF06 | Investigation | Outils d'analyse détaillée des cas suspects | Moyenne |
-| RF07 | Rapports | Génération de rapports personnalisables | Moyenne |
-| RF08 | Configuration | Paramétrage des règles et seuils | Moyenne |
-| RF09 | Audit trail | Traçabilité des actions utilisateurs | Faible |
-| RF10 | Notifications | Alertes par email/SMS | Faible |
+| ID   | Fonctionnalité      | Description                                 | Priorité |
+| ---- | ------------------- | ------------------------------------------- | -------- |
+| RF01 | Authentification    | Connexion sécurisée avec gestion des rôles  | Haute    |
+| RF02 | Dashboard principal | Vue d'ensemble des alertes et statistiques  | Haute    |
+| RF03 | Analyse temps réel  | Traitement des transactions en temps réel   | Haute    |
+| RF04 | Gestion des alertes | Création, assignation et suivi des alertes  | Haute    |
+| RF05 | Scoring de risque   | Calcul automatique du score de risque       | Haute    |
+| RF06 | Investigation       | Outils d'analyse détaillée des cas suspects | Moyenne  |
+| RF07 | Rapports            | Génération de rapports personnalisables     | Moyenne  |
+| RF08 | Configuration       | Paramétrage des règles et seuils            | Moyenne  |
+| RF09 | Audit trail         | Traçabilité des actions utilisateurs        | Faible   |
+| RF10 | Notifications       | Alertes par email/SMS                       | Faible   |
 
 ### 2.4 Spécification des besoins non-fonctionnels
 
-| ID | Critère | Exigence | Mesure |
-|----|---------|----------|--------|
-| RNF01 | Performance | Traitement < 100ms par transaction | Temps de réponse |
-| RNF02 | Disponibilité | 99.9% de disponibilité | Uptime |
-| RNF03 | Scalabilité | Support de 10,000 transactions/seconde | Débit |
-| RNF04 | Sécurité | Chiffrement AES-256, HTTPS | Audit sécurité |
-| RNF05 | Utilisabilité | Interface intuitive, formation < 2h | Tests utilisateurs |
-| RNF06 | Compatibilité | Support navigateurs modernes | Tests cross-browser |
-| RNF07 | Maintenance | Code documenté, tests > 80% | Métriques qualité |
+| ID    | Critère       | Exigence                               | Mesure              |
+| ----- | ------------- | -------------------------------------- | ------------------- |
+| RNF01 | Performance   | Traitement < 100ms par transaction     | Temps de réponse    |
+| RNF02 | Disponibilité | 99.9% de disponibilité                 | Uptime              |
+| RNF03 | Scalabilité   | Support de 10,000 transactions/seconde | Débit               |
+| RNF04 | Sécurité      | Chiffrement AES-256, HTTPS             | Audit sécurité      |
+| RNF05 | Utilisabilité | Interface intuitive, formation < 2h    | Tests utilisateurs  |
+| RNF06 | Compatibilité | Support navigateurs modernes           | Tests cross-browser |
+| RNF07 | Maintenance   | Code documenté, tests > 80%            | Métriques qualité   |
 
 ### 2.5 Analyse des besoins
 
@@ -428,6 +447,7 @@ Le diagramme de cas d'utilisation présente les interactions entre les acteurs e
 #### 2.5.2 Analyse des cas d'utilisation
 
 **CU01 : S'authentifier**
+
 - **Acteur principal :** Analyste Fraude, Superviseur, Administrateur
 - **Préconditions :** Avoir un compte utilisateur valide
 - **Scénario nominal :**
@@ -438,6 +458,7 @@ Le diagramme de cas d'utilisation présente les interactions entre les acteurs e
 - **Postconditions :** Session utilisateur active
 
 **CU02 : Consulter Dashboard**
+
 - **Acteur principal :** Analyste Fraude
 - **Préconditions :** Être authentifié
 - **Scénario nominal :**
@@ -448,6 +469,7 @@ Le diagramme de cas d'utilisation présente les interactions entre les acteurs e
 - **Postconditions :** Vue d'ensemble actualisée
 
 **CU03 : Analyser Transaction**
+
 - **Acteur principal :** Analyste Fraude
 - **Préconditions :** Alerte générée
 - **Scénario nominal :**
@@ -704,6 +726,7 @@ Ce chapitre présente l'étude technique du système d'analyse de fraude, inclua
 #### 3.2.1 IDE (Integrated Development Environment)
 
 **Visual Studio Code**
+
 - **Justification :** IDE léger, extensible avec excellent support TypeScript/JavaScript
 - **Extensions utilisées :**
   - ESLint et Prettier pour la qualité du code
@@ -712,6 +735,7 @@ Ce chapitre présente l'étude technique du système d'analyse de fraude, inclua
   - Docker pour la gestion des conteneurs
 
 **Configuration de développement :**
+
 ```json
 {
   "editor.formatOnSave": true,
@@ -745,8 +769,9 @@ Ce chapitre présente l'étude technique du système d'analyse de fraude, inclua
 ```
 
 **Docker Compose pour le développement :**
+
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   postgres:
     image: postgres:15
@@ -782,6 +807,7 @@ services:
 #### 3.3.1 Langages de Programmation
 
 **TypeScript**
+
 - **Avantages :**
   - Typage statique pour réduire les erreurs
   - Meilleur support IDE avec autocomplétion
@@ -790,15 +816,16 @@ services:
 
 **Comparaison des alternatives :**
 
-| Critère | TypeScript | JavaScript | Python |
-|---------|------------|------------|--------|
-| Performance | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| Écosystème | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| Typage | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
-| Courbe d'apprentissage | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| Support ML | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Critère                | TypeScript | JavaScript | Python     |
+| ---------------------- | ---------- | ---------- | ---------- |
+| Performance            | ⭐⭐⭐⭐   | ⭐⭐⭐⭐   | ⭐⭐⭐     |
+| Écosystème             | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   |
+| Typage                 | ⭐⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐⭐     |
+| Courbe d'apprentissage | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   |
+| Support ML             | ⭐⭐⭐     | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ |
 
 **SQL (PostgreSQL)**
+
 - Base de données relationnelle robuste
 - Support avancé des requêtes complexes
 - Excellent pour les données transactionnelles
@@ -808,31 +835,34 @@ services:
 
 **Frontend : Next.js 14**
 
-*Justification du choix :*
+_Justification du choix :_
+
 - Framework React avec rendu côté serveur (SSR)
 - Optimisations automatiques (images, fonts, scripts)
 - Routing basé sur le système de fichiers
 - Support TypeScript natif
 - Écosystème riche et communauté active
 
-*Comparaison avec les alternatives :*
+_Comparaison avec les alternatives :_
 
-| Framework | Avantages | Inconvénients | Score |
-|-----------|-----------|---------------|-------|
-| **Next.js** | SSR, Performance, SEO | Courbe d'apprentissage | ⭐⭐⭐⭐⭐ |
-| React SPA | Simplicité, Flexibilité | Pas de SSR natif | ⭐⭐⭐⭐ |
-| Vue.js | Facilité, Documentation | Écosystème plus petit | ⭐⭐⭐⭐ |
-| Angular | Structure, TypeScript | Complexité, Taille | ⭐⭐⭐ |
+| Framework   | Avantages               | Inconvénients          | Score      |
+| ----------- | ----------------------- | ---------------------- | ---------- |
+| **Next.js** | SSR, Performance, SEO   | Courbe d'apprentissage | ⭐⭐⭐⭐⭐ |
+| React SPA   | Simplicité, Flexibilité | Pas de SSR natif       | ⭐⭐⭐⭐   |
+| Vue.js      | Facilité, Documentation | Écosystème plus petit  | ⭐⭐⭐⭐   |
+| Angular     | Structure, TypeScript   | Complexité, Taille     | ⭐⭐⭐     |
 
 **Backend : Node.js avec Express**
 
-*Avantages :*
+_Avantages :_
+
 - Même langage frontend/backend (TypeScript)
 - Performance élevée pour les I/O
 - Écosystème NPM très riche
 - Facilité de déploiement
 
-*Architecture API REST :*
+_Architecture API REST :_
+
 ```typescript
 // Structure des routes API
 /api/v1/
@@ -855,13 +885,15 @@ services:
 
 **Base de données : PostgreSQL + Redis**
 
-*PostgreSQL pour les données persistantes :*
+_PostgreSQL pour les données persistantes :_
+
 - Transactions ACID
 - Requêtes complexes avec jointures
 - Index avancés pour les performances
 - Support JSON pour la flexibilité
 
-*Redis pour le cache et sessions :*
+_Redis pour le cache et sessions :_
+
 - Cache en mémoire ultra-rapide
 - Gestion des sessions utilisateur
 - Pub/Sub pour les notifications temps réel
@@ -869,17 +901,17 @@ services:
 
 **Bibliothèques principales :**
 
-| Domaine | Bibliothèque | Version | Usage |
-|---------|--------------|---------|-------|
-| UI Components | Radix UI | ^1.0.0 | Composants accessibles |
-| Styling | Tailwind CSS | ^3.4.0 | Styles utilitaires |
-| Forms | React Hook Form | ^7.48.0 | Gestion des formulaires |
-| Validation | Zod | ^3.22.0 | Validation de schémas |
-| Charts | Recharts | ^2.8.0 | Visualisations de données |
-| HTTP Client | Axios | ^1.6.0 | Requêtes API |
-| ORM | Prisma | ^5.7.0 | Accès base de données |
-| Authentication | NextAuth.js | ^4.24.0 | Authentification |
-| Testing | Jest + RTL | ^29.7.0 | Tests unitaires |
+| Domaine        | Bibliothèque    | Version | Usage                     |
+| -------------- | --------------- | ------- | ------------------------- |
+| UI Components  | Radix UI        | ^1.0.0  | Composants accessibles    |
+| Styling        | Tailwind CSS    | ^3.4.0  | Styles utilitaires        |
+| Forms          | React Hook Form | ^7.48.0 | Gestion des formulaires   |
+| Validation     | Zod             | ^3.22.0 | Validation de schémas     |
+| Charts         | Recharts        | ^2.8.0  | Visualisations de données |
+| HTTP Client    | Axios           | ^1.6.0  | Requêtes API              |
+| ORM            | Prisma          | ^5.7.0  | Accès base de données     |
+| Authentication | NextAuth.js     | ^4.24.0 | Authentification          |
+| Testing        | Jest + RTL      | ^29.7.0 | Tests unitaires           |
 
 **Architecture technique globale :**
 
@@ -931,6 +963,7 @@ services:
 Ce chapitre a présenté l'étude technique complète du système d'analyse de fraude. Les choix technologiques effectués privilégient la performance, la maintenabilité et la scalabilité :
 
 **Points clés :**
+
 - **TypeScript** pour un développement robuste et maintenable
 - **Next.js** pour une interface utilisateur moderne et performante
 - **Node.js/Express** pour un backend scalable et efficace
@@ -957,20 +990,20 @@ Ce chapitre présente la phase de réalisation du système d'analyse de fraude, 
 
 ```typescript
 // pages/api/auth/[...nextauth].ts
-import NextAuth from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { prisma } from '@/lib/prisma'
-import bcrypt from 'bcryptjs'
+import NextAuth from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { prisma } from "@/lib/prisma"
+import bcrypt from "bcryptjs"
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      name: 'credentials',
+      name: "credentials",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' }
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -978,22 +1011,22 @@ export default NextAuth({
         }
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email }
+          where: { email: credentials.email },
         })
 
-        if (!user || !await bcrypt.compare(credentials.password, user.password)) {
+        if (!user || !(await bcrypt.compare(credentials.password, user.password))) {
           return null
         }
 
         return {
           id: user.id,
           email: user.email,
-          role: user.role
+          role: user.role,
         }
-      }
-    })
+      },
+    }),
   ],
-  session: { strategy: 'jwt' },
+  session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -1004,8 +1037,8 @@ export default NextAuth({
     async session({ session, token }) {
       session.user.role = token.role
       return session
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -1100,9 +1133,9 @@ export function Dashboard() {
 
 ```typescript
 // services/fraudDetection.ts
-import { Transaction, Alert } from '@prisma/client'
-import { prisma } from '@/lib/prisma'
-import { MLModel } from '@/lib/ml'
+import { Transaction, Alert } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
+import { MLModel } from "@/lib/ml"
 
 export class FraudDetectionService {
   private mlModel: MLModel
@@ -1140,7 +1173,7 @@ export class FraudDetectionService {
       riskScore: finalScore,
       isHighRisk: finalScore > 0.7,
       triggeredRules: ruleResults.triggeredRules,
-      recommendation: this.getRecommendation(finalScore)
+      recommendation: this.getRecommendation(finalScore),
     }
   }
 
@@ -1171,7 +1204,7 @@ export class FraudDetectionService {
 
   private calculateFinalScore(mlScore: number, ruleResults: any): number {
     // Combinaison pondérée ML + règles
-    return (mlScore * 0.7) + (ruleResults.ruleScore * 0.3)
+    return mlScore * 0.7 + ruleResults.ruleScore * 0.3
   }
 }
 ```
@@ -1238,8 +1271,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - run: npm ci
       - run: npm run test
@@ -1280,13 +1313,13 @@ export async function getTransactionHistory(customerId: string) {
   // Requête optimisée avec index
   const transactions = await prisma.transaction.findMany({
     where: { customerId },
-    orderBy: { timestamp: 'desc' },
+    orderBy: { timestamp: "desc" },
     take: 100,
     include: {
       merchant: {
-        select: { name: true, category: true }
-      }
-    }
+        select: { name: true, category: true },
+      },
+    },
   })
 
   // Mise en cache pour 5 minutes
@@ -1311,8 +1344,8 @@ export async function provideFeedback(alertId: string, isFraud: boolean) {
     where: { id: alertId },
     data: {
       actualFraud: isFraud,
-      reviewedAt: new Date()
-    }
+      reviewedAt: new Date(),
+    },
   })
 
   // Réentraînement périodique du modèle
@@ -1330,34 +1363,34 @@ export async function provideFeedback(alertId: string, isFraud: boolean) {
 
 **Couverture de tests :**
 
-| Module | Tests Unitaires | Tests Intégration | Couverture |
-|--------|----------------|-------------------|------------|
-| Authentication | ✅ | ✅ | 95% |
-| Fraud Detection | ✅ | ✅ | 88% |
-| Dashboard | ✅ | ✅ | 92% |
-| API Routes | ✅ | ✅ | 90% |
-| **Total** | **✅** | **✅** | **91%** |
+| Module          | Tests Unitaires | Tests Intégration | Couverture |
+| --------------- | --------------- | ----------------- | ---------- |
+| Authentication  | ✅              | ✅                | 95%        |
+| Fraud Detection | ✅              | ✅                | 88%        |
+| Dashboard       | ✅              | ✅                | 92%        |
+| API Routes      | ✅              | ✅                | 90%        |
+| **Total**       | **✅**          | **✅**            | **91%**    |
 
 **Exemple de test unitaire :**
 
 ```typescript
 // __tests__/fraudDetection.test.ts
-import { FraudDetectionService } from '@/services/fraudDetection'
+import { FraudDetectionService } from "@/services/fraudDetection"
 
-describe('FraudDetectionService', () => {
+describe("FraudDetectionService", () => {
   let service: FraudDetectionService
 
   beforeEach(() => {
     service = new FraudDetectionService()
   })
 
-  it('should detect high-risk transaction', async () => {
+  it("should detect high-risk transaction", async () => {
     const transaction = {
-      id: '1',
+      id: "1",
       amount: 10000,
       timestamp: new Date(),
-      customerId: 'customer1',
-      merchantId: 'merchant1'
+      customerId: "customer1",
+      merchantId: "merchant1",
     }
 
     const result = await service.analyzeTransaction(transaction)
@@ -1372,19 +1405,20 @@ describe('FraudDetectionService', () => {
 
 **Résultats obtenus :**
 
-| Métrique | Objectif | Résultat | Status |
-|----------|----------|----------|--------|
-| Temps de réponse API | < 200ms | 150ms | ✅ |
-| Débit transactions | 1000/s | 1200/s | ✅ |
-| Disponibilité | 99.9% | 99.95% | ✅ |
-| Précision détection | > 85% | 88% | ✅ |
-| Faux positifs | < 15% | 12% | ✅ |
+| Métrique             | Objectif | Résultat | Status |
+| -------------------- | -------- | -------- | ------ |
+| Temps de réponse API | < 200ms  | 150ms    | ✅     |
+| Débit transactions   | 1000/s   | 1200/s   | ✅     |
+| Disponibilité        | 99.9%    | 99.95%   | ✅     |
+| Précision détection  | > 85%    | 88%      | ✅     |
+| Faux positifs        | < 15%    | 12%      | ✅     |
 
 ### 4.6 Conclusion
 
 Ce chapitre a détaillé la phase de réalisation du système d'analyse de fraude. Le développement s'est déroulé selon la planification établie, avec quelques défis techniques surmontés grâce à des solutions innovantes.
 
 **Réalisations principales :**
+
 - Interface utilisateur moderne et responsive
 - Moteur d'analyse performant avec ML
 - Architecture scalable et sécurisée
@@ -1427,6 +1461,7 @@ Ce stage de [durée] au sein de [Nom de l'Organisation] a permis de développer 
 **Impact du projet :**
 
 Le système développé apporte une valeur significative à l'organisation :
+
 - Réduction estimée de 30% des pertes liées à la fraude
 - Amélioration de 40% de l'efficacité des analystes
 - Diminution de 50% des réclamations clients liées aux blocages injustifiés
@@ -1483,46 +1518,46 @@ Ce stage a été une expérience enrichissante qui a permis de contribuer concr�
 
 ### Ouvrages et articles scientifiques
 
-[1] Phua, C., Lee, V., Smith, K., & Gayler, R. (2010). *A comprehensive survey of data mining-based fraud detection research*. arXiv preprint arXiv:1009.6119.
+[1] Phua, C., Lee, V., Smith, K., & Gayler, R. (2010). _A comprehensive survey of data mining-based fraud detection research_. arXiv preprint arXiv:1009.6119.
 
-[2] Abdallah, A., Maarof, M. A., & Zainal, A. (2016). Fraud detection system: A survey. *Journal of Network and Computer Applications*, 68, 90-113.
+[2] Abdallah, A., Maarof, M. A., & Zainal, A. (2016). Fraud detection system: A survey. _Journal of Network and Computer Applications_, 68, 90-113.
 
-[3] Rtayli, N., & Enneya, N. (2020). Enhanced credit card fraud detection based on SVM-recursive feature elimination and hyper-parameters optimization. *Journal of Information Security and Applications*, 55, 102596.
+[3] Rtayli, N., & Enneya, N. (2020). Enhanced credit card fraud detection based on SVM-recursive feature elimination and hyper-parameters optimization. _Journal of Information Security and Applications_, 55, 102596.
 
-[4] Zareapoor, M., & Shamsolmoali, P. (2015). Application of credit card fraud detection: Based on bagging ensemble classifier. *Procedia computer science*, 48, 679-685.
+[4] Zareapoor, M., & Shamsolmoali, P. (2015). Application of credit card fraud detection: Based on bagging ensemble classifier. _Procedia computer science_, 48, 679-685.
 
 ### Documentation technique
 
-[5] Next.js Documentation. (2024). *The React Framework for Production*. Vercel. https://nextjs.org/docs
+[5] Next.js Documentation. (2024). _The React Framework for Production_. Vercel. https://nextjs.org/docs
 
-[6] Node.js Foundation. (2024). *Node.js Documentation*. https://nodejs.org/docs
+[6] Node.js Foundation. (2024). _Node.js Documentation_. https://nodejs.org/docs
 
-[7] PostgreSQL Global Development Group. (2024). *PostgreSQL Documentation*. https://www.postgresql.org/docs
+[7] PostgreSQL Global Development Group. (2024). _PostgreSQL Documentation_. https://www.postgresql.org/docs
 
-[8] Prisma. (2024). *Prisma Documentation - Next-generation ORM*. https://www.prisma.io/docs
+[8] Prisma. (2024). _Prisma Documentation - Next-generation ORM_. https://www.prisma.io/docs
 
 ### Standards et réglementations
 
-[9] Payment Card Industry Security Standards Council. (2022). *PCI DSS Requirements and Security Assessment Procedures*. Version 4.0.
+[9] Payment Card Industry Security Standards Council. (2022). _PCI DSS Requirements and Security Assessment Procedures_. Version 4.0.
 
-[10] European Parliament and Council. (2016). *General Data Protection Regulation (GDPR)*. Regulation (EU) 2016/679.
+[10] European Parliament and Council. (2016). _General Data Protection Regulation (GDPR)_. Regulation (EU) 2016/679.
 
-[11] Basel Committee on Banking Supervision. (2021). *Principles for operational resilience*. Bank for International Settlements.
+[11] Basel Committee on Banking Supervision. (2021). _Principles for operational resilience_. Bank for International Settlements.
 
 ### Ressources en ligne
 
-[12] ACFE. (2022). *Report to the Nations on Occupational Fraud and Abuse*. Association of Certified Fraud Examiners.
+[12] ACFE. (2022). _Report to the Nations on Occupational Fraud and Abuse_. Association of Certified Fraud Examiners.
 
-[13] Nilson Report. (2023). *Global Payment Card Fraud Losses*. Issue 1215.
+[13] Nilson Report. (2023). _Global Payment Card Fraud Losses_. Issue 1215.
 
-[14] McKinsey & Company. (2023). *The state of AI in financial services*. Global Survey Report.
+[14] McKinsey & Company. (2023). _The state of AI in financial services_. Global Survey Report.
 
 ---
 
-*Rapport rédigé par [Votre Nom]*
-*Stage effectué du [Date début] au [Date fin]*
-*Sous la supervision de [Nom du Superviseur]*
-*[Nom de l'Organisation] - [Ville, Pays]*
+_Rapport rédigé par [Votre Nom]_
+_Stage effectué du [Date début] au [Date fin]_
+_Sous la supervision de [Nom du Superviseur]_
+_[Nom de l'Organisation] - [Ville, Pays]_
 
 ---
 

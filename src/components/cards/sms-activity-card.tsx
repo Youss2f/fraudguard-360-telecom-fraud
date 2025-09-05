@@ -6,7 +6,17 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { MessageSquare, Send, MessageCircle, Users, AlertTriangle, ChevronDown, ChevronUp, Clock, TrendingUp } from 'lucide-react'
+import {
+  MessageSquare,
+  Send,
+  MessageCircle,
+  Users,
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  TrendingUp,
+} from "lucide-react"
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { SmsActivity, FilterState } from "@/types/subscriber"
@@ -37,17 +47,13 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
                 Bulk SMS
               </Badge>
             )}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-3">
@@ -55,39 +61,31 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
             <TabsTrigger value="patterns">Patterns</TabsTrigger>
             <TabsTrigger value="logs">SMS Logs</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="overview" className="space-y-4">
             {/* Summary Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center p-3 bg-blue-50 rounded-lg">
                 <Send className="h-6 w-6 mx-auto mb-2 text-blue-600" />
-                <div className="text-2xl font-bold text-blue-600">
-                  {data.stats.sent}
-                </div>
+                <div className="text-2xl font-bold text-blue-600">{data.stats.sent}</div>
                 <div className="text-sm text-gray-600">Sent</div>
               </div>
-              
+
               <div className="text-center p-3 bg-green-50 rounded-lg">
                 <MessageCircle className="h-6 w-6 mx-auto mb-2 text-green-600" />
-                <div className="text-2xl font-bold text-green-600">
-                  {data.stats.received}
-                </div>
+                <div className="text-2xl font-bold text-green-600">{data.stats.received}</div>
                 <div className="text-sm text-gray-600">Received</div>
               </div>
-              
+
               <div className="text-center p-3 bg-purple-50 rounded-lg">
                 <Users className="h-6 w-6 mx-auto mb-2 text-purple-600" />
-                <div className="text-2xl font-bold text-purple-600">
-                  {data.stats.distinctContacts}
-                </div>
+                <div className="text-2xl font-bold text-purple-600">{data.stats.distinctContacts}</div>
                 <div className="text-sm text-gray-600">Contacts</div>
               </div>
-              
+
               <div className="text-center p-3 bg-orange-50 rounded-lg">
                 <TrendingUp className="h-6 w-6 mx-auto mb-2 text-orange-600" />
-                <div className="text-2xl font-bold text-orange-600">
-                  {data.stats.avgPerDay}
-                </div>
+                <div className="text-2xl font-bold text-orange-600">{data.stats.avgPerDay}</div>
                 <div className="text-sm text-gray-600">Avg/Day</div>
               </div>
             </div>
@@ -103,7 +101,9 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
                     <div>Patterns detected:</div>
                     <ul className="list-disc list-inside ml-4">
                       {data.bulkSmsDetection.patterns.map((pattern, index) => (
-                        <li key={index} className="text-sm">{pattern}</li>
+                        <li key={index} className="text-sm">
+                          {pattern}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -124,7 +124,7 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
               </div>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="patterns" className="space-y-4">
             {/* Peak Times */}
             <div className="space-y-2">
@@ -132,7 +132,7 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
               <div className="h-48">
                 <ChartContainer
                   config={{
-                    count: { label: "SMS Count", color: "hsl(var(--chart-2))" }
+                    count: { label: "SMS Count", color: "hsl(var(--chart-2))" },
                   }}
                   className="h-full"
                 >
@@ -165,29 +165,25 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
                     <div className="font-semibold">
                       {peak.hour}:00 - {peak.hour + 1}:00
                     </div>
-                    <div className="text-sm text-gray-600">
-                      {peak.count} messages
-                    </div>
+                    <div className="text-sm text-gray-600">{peak.count} messages</div>
                   </div>
                 ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="logs" className="space-y-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h4 className="font-semibold">Recent SMS Logs</h4>
                 <Badge variant="outline">{data.smsLogs.length} records</Badge>
               </div>
-              
+
               <div className="max-h-64 overflow-y-auto space-y-2">
                 {data.smsLogs.slice(0, 20).map((sms, index) => (
-                  <div 
+                  <div
                     key={`${sms.timestamp}-${sms.number}`}
                     className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
-                      highlightedImei === sms.imei 
-                        ? 'bg-blue-50 border-blue-200' 
-                        : 'bg-white hover:bg-gray-50'
+                      highlightedImei === sms.imei ? "bg-blue-50 border-blue-200" : "bg-white hover:bg-gray-50"
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -198,17 +194,17 @@ export function SmsActivityCard({ data, filters, onImeiHighlight, highlightedIme
                       )}
                       <div>
                         <div className="font-medium font-mono">{sms.number}</div>
-                        <div className="text-xs text-gray-500">
-                          {new Date(sms.timestamp).toLocaleString()}
-                        </div>
+                        <div className="text-xs text-gray-500">{new Date(sms.timestamp).toLocaleString()}</div>
                       </div>
                     </div>
-                    
+
                     <div className="text-right">
                       <div className="font-medium">{sms.length} chars</div>
-                      <div 
+                      <div
                         className={`text-xs font-mono cursor-pointer transition-colors ${
-                          highlightedImei === sms.imei ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-blue-600'
+                          highlightedImei === sms.imei
+                            ? "text-blue-600 font-semibold"
+                            : "text-gray-400 hover:text-blue-600"
                         }`}
                         onClick={() => onImeiHighlight(highlightedImei === sms.imei ? null : sms.imei)}
                       >

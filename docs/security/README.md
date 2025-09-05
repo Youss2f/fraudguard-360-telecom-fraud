@@ -9,6 +9,7 @@ FraudGuard 360° implements enterprise-grade security following industry best pr
 ## 🔒 **Security Architecture**
 
 ### **Security Principles**
+
 - **Zero Trust**: Never trust, always verify
 - **Defense in Depth**: Multiple layers of security controls
 - **Principle of Least Privilege**: Minimal access rights
@@ -16,6 +17,7 @@ FraudGuard 360° implements enterprise-grade security following industry best pr
 - **Continuous Monitoring**: Real-time security monitoring and alerting
 
 ### **Threat Model**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                 Threat Landscape                   │
@@ -33,25 +35,28 @@ FraudGuard 360° implements enterprise-grade security following industry best pr
 ## 🔐 **Authentication & Authorization**
 
 ### **Authentication Methods**
+
 ```typescript
 // JWT Token Implementation
 interface JWTPayload {
-  userId: string;
-  username: string;
-  role: UserRole;
-  permissions: string[];
-  iat: number;
-  exp: number;
+  userId: string
+  username: string
+  role: UserRole
+  permissions: string[]
+  iat: number
+  exp: number
 }
 ```
 
 **Features:**
+
 - **JWT Tokens**: Stateless authentication with configurable expiration
 - **Password Hashing**: bcrypt with configurable rounds (default: 12)
 - **Session Management**: Database-backed sessions with automatic cleanup
 - **Multi-Factor Authentication**: TOTP support (future enhancement)
 
 ### **Authorization Model**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Role-Based Access Control             │
@@ -65,6 +70,7 @@ interface JWTPayload {
 ```
 
 ### **API Security**
+
 - **API Key Authentication**: For external integrations
 - **Rate Limiting**: 100 requests per 15 minutes (configurable)
 - **Request Validation**: Zod schema validation for all inputs
@@ -75,23 +81,26 @@ interface JWTPayload {
 ## 🔒 **Data Protection**
 
 ### **Encryption Implementation**
+
 ```typescript
 // AES-256-GCM Encryption
 interface EncryptionConfig {
-  algorithm: 'aes-256-gcm';
-  keyLength: 32; // 256 bits
-  ivLength: 16;  // 128 bits
-  tagLength: 16; // 128 bits
+  algorithm: "aes-256-gcm"
+  keyLength: 32 // 256 bits
+  ivLength: 16 // 128 bits
+  tagLength: 16 // 128 bits
 }
 ```
 
 **Encryption Standards:**
+
 - **At Rest**: AES-256-GCM for database fields and file storage
 - **In Transit**: TLS 1.3 for all network communications
 - **Key Management**: Environment-based key storage with rotation support
 - **Data Masking**: PII masking in logs and non-production environments
 
 ### **Sensitive Data Handling**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Data Classification                   │
@@ -104,6 +113,7 @@ interface EncryptionConfig {
 ```
 
 **Protected Data Types:**
+
 - Phone numbers (MSISDN)
 - International Mobile Subscriber Identity (IMSI)
 - Call Detail Records (CDR)
@@ -115,17 +125,19 @@ interface EncryptionConfig {
 ## 🛡️ **Application Security**
 
 ### **Input Validation & Sanitization**
+
 ```typescript
 // Zod Schema Example
 const subscriberSearchSchema = z.object({
   id: z.string().min(1).max(50),
-  type: z.enum(['msisdn', 'imsi']),
+  type: z.enum(["msisdn", "imsi"]),
   startDate: z.string().datetime().optional(),
-  endDate: z.string().datetime().optional()
-});
+  endDate: z.string().datetime().optional(),
+})
 ```
 
 **Security Controls:**
+
 - **Input Validation**: Zod schemas for all API endpoints
 - **SQL Injection Prevention**: Parameterized queries with Prisma ORM
 - **XSS Protection**: Content Security Policy (CSP) headers
@@ -133,16 +145,17 @@ const subscriberSearchSchema = z.object({
 - **Path Traversal Prevention**: Input sanitization and validation
 
 ### **Security Headers**
+
 ```typescript
 // Security Headers Implementation
 const securityHeaders = {
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'",
-  'Referrer-Policy': 'strict-origin-when-cross-origin'
-};
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "X-XSS-Protection": "1; mode=block",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+}
 ```
 
 ---
@@ -150,21 +163,23 @@ const securityHeaders = {
 ## 🔍 **Security Monitoring & Logging**
 
 ### **Audit Logging**
+
 ```typescript
 interface AuditLog {
-  id: string;
-  userId: string;
-  action: string;
-  resource: string;
-  timestamp: Date;
-  ipAddress: string;
-  userAgent: string;
-  success: boolean;
-  details?: Record<string, any>;
+  id: string
+  userId: string
+  action: string
+  resource: string
+  timestamp: Date
+  ipAddress: string
+  userAgent: string
+  success: boolean
+  details?: Record<string, any>
 }
 ```
 
 **Logged Events:**
+
 - Authentication attempts (success/failure)
 - Authorization failures
 - Data access and modifications
@@ -173,6 +188,7 @@ interface AuditLog {
 - System configuration changes
 
 ### **Security Monitoring**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Security Monitoring                   │
@@ -187,6 +203,7 @@ interface AuditLog {
 ```
 
 ### **Alerting Rules**
+
 - **Brute Force Detection**: Multiple failed login attempts
 - **Anomaly Detection**: Unusual user behavior patterns
 - **Data Breach Indicators**: Large data exports or access violations
@@ -197,6 +214,7 @@ interface AuditLog {
 ## 🐳 **Container Security**
 
 ### **Docker Security Best Practices**
+
 ```dockerfile
 # Security-hardened Dockerfile example
 FROM node:18-alpine AS base
@@ -211,6 +229,7 @@ ENV HOSTNAME "0.0.0.0"
 ```
 
 **Container Security Features:**
+
 - **Non-root Execution**: All containers run as non-privileged users
 - **Minimal Base Images**: Alpine Linux for reduced attack surface
 - **Security Scanning**: Trivy scanning in CI/CD pipeline
@@ -218,6 +237,7 @@ ENV HOSTNAME "0.0.0.0"
 - **Read-only Filesystems**: Immutable container filesystems where possible
 
 ### **Kubernetes Security**
+
 ```yaml
 # Security Context Example
 securityContext:
@@ -227,10 +247,11 @@ securityContext:
   readOnlyRootFilesystem: false
   capabilities:
     drop:
-    - ALL
+      - ALL
 ```
 
 **K8s Security Controls:**
+
 - **Network Policies**: Micro-segmentation between pods
 - **Pod Security Standards**: Restricted security policies
 - **RBAC**: Role-based access control for cluster resources
@@ -241,16 +262,18 @@ securityContext:
 ## 🔒 **GDPR Compliance**
 
 ### **Data Subject Rights**
+
 ```typescript
 interface GDPRCompliance {
-  dataExport: () => Promise<UserData>;
-  dataAnonymization: () => Promise<void>;
-  dataRetention: () => Promise<RetentionPolicy>;
-  consentManagement: () => Promise<ConsentRecord>;
+  dataExport: () => Promise<UserData>
+  dataAnonymization: () => Promise<void>
+  dataRetention: () => Promise<RetentionPolicy>
+  consentManagement: () => Promise<ConsentRecord>
 }
 ```
 
 **GDPR Features:**
+
 - **Right to Access**: Data export functionality
 - **Right to Erasure**: Data anonymization and deletion
 - **Data Portability**: Structured data export formats
@@ -258,6 +281,7 @@ interface GDPRCompliance {
 - **Data Retention**: Automated data lifecycle management
 
 ### **Privacy by Design**
+
 - **Data Minimization**: Collect only necessary data
 - **Purpose Limitation**: Use data only for stated purposes
 - **Storage Limitation**: Automatic data retention policies
@@ -268,6 +292,7 @@ interface GDPRCompliance {
 ## 🚨 **Incident Response**
 
 ### **Security Incident Classification**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │            Incident Severity Levels               │
@@ -280,6 +305,7 @@ interface GDPRCompliance {
 ```
 
 ### **Response Procedures**
+
 1. **Detection**: Automated monitoring and manual reporting
 2. **Assessment**: Severity classification and impact analysis
 3. **Containment**: Immediate threat isolation and mitigation
@@ -292,6 +318,7 @@ interface GDPRCompliance {
 ## 🔧 **Security Configuration**
 
 ### **Environment Variables**
+
 ```bash
 # Security Configuration
 ENABLE_RATE_LIMITING=true
@@ -309,6 +336,7 @@ ENABLE_AUDIT_LOGGING=true
 ```
 
 ### **Security Checklist**
+
 - [ ] Change default passwords and secrets
 - [ ] Configure proper CORS origins
 - [ ] Set up TLS certificates
@@ -325,18 +353,21 @@ ENABLE_AUDIT_LOGGING=true
 ## 📚 **Security Resources**
 
 ### **Standards & Frameworks**
+
 - **OWASP Top 10**: Web application security risks
 - **NIST Cybersecurity Framework**: Comprehensive security framework
 - **ISO 27001**: Information security management
 - **SOC 2**: Security and availability controls
 
 ### **Security Tools**
+
 - **Static Analysis**: ESLint security rules, Semgrep
 - **Dependency Scanning**: npm audit, Snyk
 - **Container Scanning**: Trivy, Clair
 - **Runtime Protection**: Falco, Sysdig
 
 ### **Related Documentation**
+
 - [Architecture Documentation](../technical/architecture.md)
 - [API Documentation](../api/README.md)
 - [Deployment Guide](../operations/deployment.md)

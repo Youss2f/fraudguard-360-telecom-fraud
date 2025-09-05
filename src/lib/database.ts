@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-import { decryptDataObject, secureDataObject, isEncryptionEnabled } from './encryption'
-import { trackDbQuery } from './performance'
-import { logDatabaseOperation, createTimer } from './logger'
-import { CacheOperations } from './cache'
+import { PrismaClient } from "@prisma/client"
+import { decryptDataObject, secureDataObject, isEncryptionEnabled } from "./encryption"
+import { trackDbQuery } from "./performance"
+import { logDatabaseOperation, createTimer } from "./logger"
+import { CacheOperations } from "./cache"
 
 // Global variable to store the Prisma client instance
 const globalForPrisma = globalThis as unknown as {
@@ -13,20 +13,20 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   })
 
 // In development, store the client on the global object to prevent multiple instances
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
 
 // Database connection helper
 export async function connectDatabase() {
   try {
     await prisma.$connect()
-    console.log('✅ Database connected successfully')
+    // Database connected successfully
     return true
   } catch (error) {
-    console.error('❌ Database connection failed:', error)
+    console.error("❌ Database connection failed:", error)
     return false
   }
 }
@@ -35,9 +35,9 @@ export async function connectDatabase() {
 export async function disconnectDatabase() {
   try {
     await prisma.$disconnect()
-    console.log('✅ Database disconnected successfully')
+    // Database disconnected successfully
   } catch (error) {
-    console.error('❌ Database disconnection failed:', error)
+    console.error("❌ Database disconnection failed:", error)
   }
 }
 
@@ -46,37 +46,37 @@ export async function checkDatabaseHealth() {
   try {
     await prisma.$queryRaw`SELECT 1`
     return {
-      status: 'healthy',
+      status: "healthy",
       timestamp: new Date().toISOString(),
       latency: 0, // Could measure actual latency
     }
   } catch (error) {
     return {
-      status: 'unhealthy',
+      status: "unhealthy",
       timestamp: new Date().toISOString(),
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     }
   }
 }
 
 // Feature flag helper
 export function shouldUseRealData(): boolean {
-  return process.env.ENABLE_REAL_DATA === 'true'
+  return process.env.ENABLE_REAL_DATA === "true"
 }
 
 export function shouldUseMockData(): boolean {
-  return process.env.ENABLE_MOCK_DATA !== 'false'
+  return process.env.ENABLE_MOCK_DATA !== "false"
 }
 
 export function isDemoMode(): boolean {
-  return process.env.ENABLE_DEMO_MODE === 'true'
+  return process.env.ENABLE_DEMO_MODE === "true"
 }
 
 // Database query helpers with fallback to mock data
-export async function getSubscriberData(id: string, searchType: 'msisdn' | 'imsi' = 'msisdn') {
+export async function getSubscriberData(id: string, searchType: "msisdn" | "imsi" = "msisdn") {
   if (!shouldUseRealData()) {
     // Fallback to existing mock data system
-    const { generateMockDataWithAI } = await import('./mock-data-ai')
+    const { generateMockDataWithAI } = await import("./mock-data-ai")
     return generateMockDataWithAI(id, searchType)
   }
 
@@ -91,34 +91,34 @@ export async function getSubscriberData(id: string, searchType: 'msisdn' | 'imsi
   try {
     // For encrypted data, we need to search differently
     // In production, you'd have indexed hash fields for searching
-    const whereClause = searchType === 'msisdn' ? { msisdn: id } : { imsi: id }
-    
+    const whereClause = searchType === "msisdn" ? { msisdn: id } : { imsi: id }
+
     const subscriber = await prisma.subscriber.findUnique({
       where: whereClause,
       include: {
         callRecords: {
           take: 50,
-          orderBy: { startTime: 'desc' },
+          orderBy: { startTime: "desc" },
         },
         smsRecords: {
           take: 50,
-          orderBy: { timestamp: 'desc' },
+          orderBy: { timestamp: "desc" },
         },
         dataRecords: {
           take: 50,
-          orderBy: { sessionStart: 'desc' },
+          orderBy: { sessionStart: "desc" },
         },
         fraudAlerts: {
           take: 10,
-          orderBy: { createdAt: 'desc' },
+          orderBy: { createdAt: "desc" },
         },
         riskProfiles: {
           take: 1,
-          orderBy: { profileDate: 'desc' },
+          orderBy: { profileDate: "desc" },
         },
         investigations: {
           take: 5,
-          orderBy: { createdAt: 'desc' },
+          orderBy: { createdAt: "desc" },
         },
       },
     })
@@ -128,13 +128,11 @@ export async function getSubscriberData(id: string, searchType: 'msisdn' | 'imsi
     }
 
     const duration = timer.end()
-    logDatabaseOperation('SELECT', 'subscriber', duration, true)
-    trackDbQuery('SELECT', 'subscriber', duration, true)
+    logDatabaseOperation("SELECT", "subscriber", duration, true)
+    trackDbQuery("SELECT", "subscriber", duration, true)
 
     // Decrypt sensitive data if encryption is enabled
-    const decryptedSubscriber = isEncryptionEnabled()
-      ? decryptDataObject(subscriber)
-      : subscriber
+    const decryptedSubscriber = isEncryptionEnabled() ? decryptDataObject(subscriber) : subscriber
 
     const result = {
       subscriber: decryptedSubscriber,
@@ -144,7 +142,7 @@ export async function getSubscriberData(id: string, searchType: 'msisdn' | 'imsi
       fraudAlerts: subscriber.fraudAlerts,
       riskProfile: subscriber.riskProfiles[0] || null,
       investigations: subscriber.investigations,
-      source: 'database'
+      source: "database",
     }
 
     // Cache the result
@@ -153,12 +151,18 @@ export async function getSubscriberData(id: string, searchType: 'msisdn' | 'imsi
     return result
   } catch (error) {
     const duration = timer.end()
-    logDatabaseOperation('SELECT', 'subscriber', duration, false, error instanceof Error ? error.message : 'Unknown error')
-    trackDbQuery('SELECT', 'subscriber', duration, false)
+    logDatabaseOperation(
+      "SELECT",
+      "subscriber",
+      duration,
+      false,
+      error instanceof Error ? error.message : "Unknown error"
+    )
+    trackDbQuery("SELECT", "subscriber", duration, false)
 
-    console.error('Database query failed, falling back to mock data:', error)
+    console.error("Database query failed, falling back to mock data:", error)
     // Fallback to mock data if database query fails
-    const { generateMockDataWithAI } = await import('./mock-data-ai')
+    const { generateMockDataWithAI } = await import("./mock-data-ai")
     return generateMockDataWithAI(id, searchType)
   }
 }
@@ -175,26 +179,21 @@ export async function getRealTimeAnalytics() {
         risk_alerts: Math.floor(Math.random() * 10) + 5,
         network_health: Math.floor(Math.random() * 10) + 90,
       },
-      source: 'mock_data'
+      source: "mock_data",
     }
   }
 
   // Try cache first
-  const cachedAnalytics = await CacheOperations.getAnalytics('real_time')
+  const cachedAnalytics = await CacheOperations.getAnalytics("real_time")
   if (cachedAnalytics) {
     return cachedAnalytics
   }
 
   try {
-    const [
-      totalSubscribers,
-      activeInvestigations,
-      openAlerts,
-      recentCalls,
-    ] = await Promise.all([
-      prisma.subscriber.count({ where: { status: 'ACTIVE' } }),
-      prisma.investigation.count({ where: { status: 'IN_PROGRESS' } }),
-      prisma.fraudAlert.count({ where: { status: 'OPEN' } }),
+    const [totalSubscribers, activeInvestigations, openAlerts, recentCalls] = await Promise.all([
+      prisma.subscriber.count({ where: { status: "ACTIVE" } }),
+      prisma.investigation.count({ where: { status: "IN_PROGRESS" } }),
+      prisma.fraudAlert.count({ where: { status: "OPEN" } }),
       prisma.callRecord.count({
         where: {
           startTime: {
@@ -214,15 +213,15 @@ export async function getRealTimeAnalytics() {
         fraud_detection_rate: 95, // Could calculate from actual data
         network_health: 98,
       },
-      source: 'real_database'
+      source: "real_database",
     }
 
     // Cache the result
-    await CacheOperations.setAnalytics('real_time', result)
+    await CacheOperations.setAnalytics("real_time", result)
 
     return result
   } catch (error) {
-    console.error('Failed to get real-time analytics from database:', error)
+    console.error("Failed to get real-time analytics from database:", error)
     // Fallback to mock data
     return {
       timestamp: new Date().toISOString(),
@@ -232,17 +231,10 @@ export async function getRealTimeAnalytics() {
         risk_alerts: Math.floor(Math.random() * 10) + 5,
         network_health: Math.floor(Math.random() * 10) + 90,
       },
-      source: 'mock_fallback'
+      source: "mock_fallback",
     }
   }
 }
 
 // Export types for use in components
-export type { 
-  User, 
-  Subscriber, 
-  CallRecord, 
-  FraudAlert, 
-  Investigation,
-  RiskProfile 
-} from '@prisma/client'
+export type { User, Subscriber, CallRecord, FraudAlert, Investigation, RiskProfile } from "@prisma/client"

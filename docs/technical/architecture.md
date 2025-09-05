@@ -9,6 +9,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 🎯 **Architecture Principles**
 
 ### **Design Philosophy**
+
 - **Security First**: Every component implements security by design
 - **Performance Optimized**: Multi-level caching and optimization strategies
 - **Cloud Native**: Container-first approach with Kubernetes orchestration
@@ -16,6 +17,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 - **Scalability**: Horizontal scaling capabilities with auto-scaling
 
 ### **Technology Stack**
+
 - **Frontend**: Next.js 15.2.4 with React 19 and TypeScript 5.0
 - **Backend**: Node.js with Next.js API routes
 - **Database**: PostgreSQL with Prisma ORM
@@ -29,6 +31,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 🏛️ **System Components**
 
 ### **1. Frontend Layer**
+
 ```
 ┌─────────────────────────────────────────┐
 │              Frontend Layer             │
@@ -42,12 +45,14 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 **Key Features:**
+
 - Server-side rendering (SSR) for performance
 - Client-side hydration for interactivity
 - Real-time dashboard updates
 - Progressive Web App (PWA) capabilities
 
 ### **2. API Gateway Layer**
+
 ```
 ┌─────────────────────────────────────────┐
 │             API Gateway                 │
@@ -61,6 +66,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 **Security Middleware:**
+
 - JWT token validation
 - API key authentication
 - Rate limiting (100 req/15min)
@@ -68,6 +74,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 - CSRF protection
 
 ### **3. Business Logic Layer**
+
 ```
 ┌─────────────────────────────────────────┐
 │           Business Services             │
@@ -81,12 +88,14 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 **Core Services:**
+
 - **Fraud Detection**: Multi-algorithm fraud analysis
 - **CDR Processing**: Telecom data file processing
 - **Analytics**: Real-time subscriber intelligence
 - **Streaming**: Live event processing and distribution
 
 ### **4. Data Layer**
+
 ```
 ┌─────────────────────────────────────────┐
 │              Data Layer                 │
@@ -99,6 +108,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 **Data Management:**
+
 - ACID compliance with PostgreSQL
 - Connection pooling and optimization
 - Automated backups and point-in-time recovery
@@ -109,6 +119,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 🔄 **Data Flow Architecture**
 
 ### **Request Processing Flow**
+
 ```
 ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
 │ Client  │───▶│   CDN   │───▶│ Load    │───▶│   App   │
@@ -123,6 +134,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 ### **Real-time Data Processing**
+
 ```
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
 │ CDR Files   │───▶│ Processing  │───▶│ Fraud       │
@@ -142,6 +154,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 🛡️ **Security Architecture**
 
 ### **Defense in Depth Strategy**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                  Security Layers                   │
@@ -156,6 +169,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 ### **Data Protection**
+
 - **Encryption at Rest**: AES-256 for database and files
 - **Encryption in Transit**: TLS 1.3 for all communications
 - **Data Masking**: PII masking in logs and non-production environments
@@ -166,6 +180,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 📊 **Monitoring & Observability**
 
 ### **Three Pillars of Observability**
+
 ```
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │   Metrics   │  │    Logs     │  │   Traces    │
@@ -176,6 +191,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 ### **Monitoring Stack**
+
 - **Metrics**: Prometheus for metrics collection, Grafana for visualization
 - **Logging**: Structured logging with Winston, ELK stack for aggregation
 - **Alerting**: Alert Manager for intelligent alerting and escalation
@@ -186,6 +202,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## ☁️ **Deployment Architecture**
 
 ### **Container Strategy**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                Docker Containers                   │
@@ -199,6 +216,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 ### **Kubernetes Orchestration**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Kubernetes Cluster                    │
@@ -216,6 +234,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 🔧 **Development Architecture**
 
 ### **Development Workflow**
+
 ```
 ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
 │ Development │  │   Staging   │  │ Production  │
@@ -227,6 +246,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ```
 
 ### **CI/CD Pipeline**
+
 ```
 ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
 │  Code   │─▶│  Test   │─▶│  Build  │─▶│ Deploy  │
@@ -239,12 +259,14 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 📈 **Scalability Architecture**
 
 ### **Horizontal Scaling Strategy**
+
 - **Application Layer**: Multiple pod replicas with load balancing
 - **Database Layer**: Read replicas and connection pooling
 - **Cache Layer**: Redis cluster with sharding
 - **File Storage**: Distributed storage with CDN
 
 ### **Performance Optimization**
+
 - **Caching Strategy**: Multi-level caching (CDN, Redis, Application)
 - **Database Optimization**: Indexing, query optimization, connection pooling
 - **Asset Optimization**: Image optimization, code splitting, lazy loading
@@ -255,6 +277,7 @@ FraudGuard 360° is built using a modern, cloud-native architecture that emphasi
 ## 🔮 **Future Architecture Considerations**
 
 ### **Microservices Migration Path**
+
 ```
 Current: Monolithic Deployment
     ↓
@@ -268,6 +291,7 @@ Future: Full Microservices
 ```
 
 ### **Technology Roadmap**
+
 - **Service Mesh**: Istio for advanced traffic management
 - **Event Streaming**: Apache Kafka for event-driven architecture
 - **Machine Learning**: TensorFlow/PyTorch for advanced fraud detection

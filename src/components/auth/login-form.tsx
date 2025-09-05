@@ -1,14 +1,14 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Separator } from '@/components/ui/separator'
-import { Shield, User, Lock, Eye, EyeOff, Info } from 'lucide-react'
-import { useAuth } from '@/lib/auth-context'
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Separator } from "@/components/ui/separator"
+import { Shield, User, Lock, Eye, EyeOff, Info } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 
 interface DemoCredential {
   username: string
@@ -18,35 +18,35 @@ interface DemoCredential {
 }
 
 export function LoginForm() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState("")
   const [demoCredentials, setDemoCredentials] = useState<DemoCredential[]>([])
   const { login, isLoading } = useAuth()
 
   useEffect(() => {
     // Fetch demo credentials
-    fetch('/api/auth/login')
-      .then(res => res.json())
-      .then(data => setDemoCredentials(data.demo_credentials || []))
+    fetch("/api/auth/login")
+      .then((res) => res.json())
+      .then((data) => setDemoCredentials(data.demo_credentials || []))
       .catch(() => {})
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
+    setError("")
 
     const result = await login(username, password)
     if (!result.success) {
-      setError(result.error || 'Login failed')
+      setError(result.error || "Login failed")
     }
   }
 
   const handleDemoLogin = (credential: DemoCredential) => {
     setUsername(credential.username)
     setPassword(credential.password)
-    setError('')
+    setError("")
   }
 
   return (
@@ -105,9 +105,7 @@ export function LoginForm() {
 
               {error && (
                 <Alert className="bg-red-500/20 border-red-500/50">
-                  <AlertDescription className="text-red-200">
-                    {error}
-                  </AlertDescription>
+                  <AlertDescription className="text-red-200">{error}</AlertDescription>
                 </Alert>
               )}
 
@@ -116,7 +114,7 @@ export function LoginForm() {
                 className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing In...' : 'Sign In'}
+                {isLoading ? "Signing In..." : "Sign In"}
               </Button>
             </form>
           </CardContent>
@@ -155,9 +153,7 @@ export function LoginForm() {
                   <div className="text-xs text-gray-400 font-mono">
                     {credential.username} / {credential.password}
                   </div>
-                  {index < demoCredentials.length - 1 && (
-                    <Separator className="bg-white/20" />
-                  )}
+                  {index < demoCredentials.length - 1 && <Separator className="bg-white/20" />}
                 </div>
               ))}
             </CardContent>

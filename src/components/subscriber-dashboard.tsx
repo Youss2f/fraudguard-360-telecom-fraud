@@ -240,7 +240,10 @@ export function SubscriberDashboard({ searchQuery, searchType, dateRange }: Subs
               <div className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 shadow-sm border dark:border-gray-700">
                 <Brain className="h-4 w-4 text-blue-500" />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">AI Risk Score:</span>
-                <Badge variant={riskInfo.color as "default" | "secondary" | "destructive" | "outline"} className="flex items-center gap-1">
+                <Badge
+                  variant={riskInfo.color as "default" | "secondary" | "destructive" | "outline"}
+                  className="flex items-center gap-1"
+                >
                   <RiskIcon className="h-3 w-3" />
                   {subscriberData.aiAnalysis.overallRiskScore}% {riskInfo.level}
                 </Badge>
@@ -327,7 +330,17 @@ export function SubscriberDashboard({ searchQuery, searchType, dateRange }: Subs
                     <Calendar className="h-4 w-4 text-gray-500" />
                     <DatePickerWithRange
                       date={filters.dateRange}
-                      onDateChange={(dateRange) => setFilters((prev) => ({ ...prev, dateRange }))}
+                      onDateChange={(dateRange) => {
+                        if (dateRange && dateRange.from && dateRange.to) {
+                          setFilters((prev) => ({ 
+                            ...prev, 
+                            dateRange: { 
+                              from: dateRange.from as Date, 
+                              to: dateRange.to as Date 
+                            }
+                          }))
+                        }
+                      }}
                     />
                   </div>
 

@@ -1,40 +1,40 @@
-import { prisma, shouldUseRealData } from './database'
-import { anonymizeData, maskSensitiveData } from './encryption'
-import { logBusinessEvent } from './logger'
+import { prisma, shouldUseRealData } from "./database"
+import { anonymizeData, maskSensitiveData } from "./encryption"
+import { logBusinessEvent } from "./logger"
 
 // GDPR compliance configuration
 const GDPR_CONFIG = {
-  enableGdpr: process.env.ENABLE_GDPR_COMPLIANCE !== 'false',
-  dataRetentionDays: parseInt(process.env.DATA_RETENTION_DAYS || '2555'), // 7 years default
-  anonymizationDelay: parseInt(process.env.ANONYMIZATION_DELAY_DAYS || '30'), // 30 days
+  enableGdpr: process.env.ENABLE_GDPR_COMPLIANCE !== "false",
+  dataRetentionDays: parseInt(process.env.DATA_RETENTION_DAYS || "2555"), // 7 years default
+  anonymizationDelay: parseInt(process.env.ANONYMIZATION_DELAY_DAYS || "30"), // 30 days
 }
 
 // Data subject rights under GDPR
 export enum DataSubjectRights {
-  ACCESS = 'access',           // Right to access personal data
-  RECTIFICATION = 'rectification', // Right to rectify inaccurate data
-  ERASURE = 'erasure',         // Right to be forgotten
-  PORTABILITY = 'portability', // Right to data portability
-  RESTRICTION = 'restriction', // Right to restrict processing
-  OBJECTION = 'objection',     // Right to object to processing
+  ACCESS = "access", // Right to access personal data
+  RECTIFICATION = "rectification", // Right to rectify inaccurate data
+  ERASURE = "erasure", // Right to be forgotten
+  PORTABILITY = "portability", // Right to data portability
+  RESTRICTION = "restriction", // Right to restrict processing
+  OBJECTION = "objection", // Right to object to processing
 }
 
 // GDPR request status
 export enum GdprRequestStatus {
-  PENDING = 'pending',
-  IN_PROGRESS = 'in_progress',
-  COMPLETED = 'completed',
-  REJECTED = 'rejected',
+  PENDING = "pending",
+  IN_PROGRESS = "in_progress",
+  COMPLETED = "completed",
+  REJECTED = "rejected",
 }
 
 // Data processing lawful basis
 export enum LawfulBasis {
-  CONSENT = 'consent',
-  CONTRACT = 'contract',
-  LEGAL_OBLIGATION = 'legal_obligation',
-  VITAL_INTERESTS = 'vital_interests',
-  PUBLIC_TASK = 'public_task',
-  LEGITIMATE_INTERESTS = 'legitimate_interests',
+  CONSENT = "consent",
+  CONTRACT = "contract",
+  LEGAL_OBLIGATION = "legal_obligation",
+  VITAL_INTERESTS = "vital_interests",
+  PUBLIC_TASK = "public_task",
+  LEGITIMATE_INTERESTS = "legitimate_interests",
 }
 
 // GDPR request interface
@@ -57,13 +57,13 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
       subscriber_id: subscriberId,
       export_date: new Date().toISOString(),
       data: {
-        personal_info: '[DEMO_DATA]',
-        call_records: '[DEMO_DATA]',
-        sms_records: '[DEMO_DATA]',
-        data_usage: '[DEMO_DATA]',
+        personal_info: "[DEMO_DATA]",
+        call_records: "[DEMO_DATA]",
+        sms_records: "[DEMO_DATA]",
+        data_usage: "[DEMO_DATA]",
       },
-      format: 'JSON',
-      note: 'This is demo data for showcase purposes'
+      format: "JSON",
+      note: "This is demo data for showcase purposes",
     }
   }
 
@@ -81,11 +81,11 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
     })
 
     if (!subscriber) {
-      throw new Error('Subscriber not found')
+      throw new Error("Subscriber not found")
     }
 
     // Log the data export request
-    logBusinessEvent('GDPR_DATA_EXPORT', 'subscriber', subscriberId, requestedBy)
+    logBusinessEvent("GDPR_DATA_EXPORT", "subscriber", subscriberId, requestedBy)
 
     // Structure data for export
     const exportData = {
@@ -93,8 +93,8 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
         subscriber_id: subscriberId,
         export_date: new Date().toISOString(),
         requested_by: requestedBy,
-        data_controller: 'FraudGuard 360°',
-        format: 'JSON',
+        data_controller: "FraudGuard 360°",
+        format: "JSON",
       },
       personal_data: {
         basic_info: {
@@ -122,7 +122,7 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
         },
       },
       usage_data: {
-        call_records: subscriber.callRecords.map(record => ({
+        call_records: subscriber.callRecords.map((record) => ({
           id: record.id,
           call_type: record.callType,
           direction: record.direction,
@@ -134,14 +134,14 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
           cost: record.cost,
           currency: record.currency,
         })),
-        sms_records: subscriber.smsRecords.map(record => ({
+        sms_records: subscriber.smsRecords.map((record) => ({
           id: record.id,
           direction: record.direction,
           sender_number: record.senderNumber,
           receiver_number: record.receiverNumber,
           timestamp: record.timestamp,
         })),
-        data_records: subscriber.dataRecords.map(record => ({
+        data_records: subscriber.dataRecords.map((record) => ({
           id: record.id,
           session_start: record.sessionStart,
           session_end: record.sessionEnd,
@@ -150,7 +150,7 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
         })),
       },
       fraud_data: {
-        alerts: subscriber.fraudAlerts.map(alert => ({
+        alerts: subscriber.fraudAlerts.map((alert) => ({
           id: alert.id,
           alert_type: alert.alertType,
           severity: alert.severity,
@@ -161,7 +161,7 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
           status: alert.status,
           created_at: alert.createdAt,
         })),
-        risk_profiles: subscriber.riskProfiles.map(profile => ({
+        risk_profiles: subscriber.riskProfiles.map((profile) => ({
           id: profile.id,
           profile_date: profile.profileDate,
           velocity_score: profile.velocityScore,
@@ -170,7 +170,7 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
           device_score: profile.deviceScore,
         })),
       },
-      investigations: subscriber.investigations.map(investigation => ({
+      investigations: subscriber.investigations.map((investigation) => ({
         id: investigation.id,
         case_number: investigation.caseNumber,
         title: investigation.title,
@@ -181,10 +181,9 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
     }
 
     return exportData
-
   } catch (error) {
-    console.error('Data export failed:', error)
-    throw new Error('Failed to export subscriber data')
+    console.error("Data export failed:", error)
+    throw new Error("Failed to export subscriber data")
   }
 }
 
@@ -192,7 +191,7 @@ export async function exportSubscriberData(subscriberId: string, requestedBy: st
 export async function anonymizeSubscriberData(subscriberId: string, requestedBy: string): Promise<boolean> {
   if (!shouldUseRealData()) {
     // Mock anonymization for demo
-    logBusinessEvent('GDPR_ANONYMIZATION', 'subscriber', subscriberId, requestedBy, { mode: 'demo' })
+    logBusinessEvent("GDPR_ANONYMIZATION", "subscriber", subscriberId, requestedBy, { mode: "demo" })
     return true
   }
 
@@ -202,7 +201,7 @@ export async function anonymizeSubscriberData(subscriberId: string, requestedBy:
     })
 
     if (!subscriber) {
-      throw new Error('Subscriber not found')
+      throw new Error("Subscriber not found")
     }
 
     // Anonymize personal data
@@ -213,18 +212,17 @@ export async function anonymizeSubscriberData(subscriberId: string, requestedBy:
       data: {
         ...anonymizedData,
         // Mark as anonymized
-        status: 'TERMINATED',
+        status: "TERMINATED",
         updatedAt: new Date(),
       },
     })
 
     // Log the anonymization
-    logBusinessEvent('GDPR_ANONYMIZATION', 'subscriber', subscriberId, requestedBy)
+    logBusinessEvent("GDPR_ANONYMIZATION", "subscriber", subscriberId, requestedBy)
 
     return true
-
   } catch (error) {
-    console.error('Anonymization failed:', error)
+    console.error("Anonymization failed:", error)
     return false
   }
 }
@@ -233,8 +231,8 @@ export async function anonymizeSubscriberData(subscriberId: string, requestedBy:
 export async function checkDataRetention(): Promise<any> {
   if (!shouldUseRealData()) {
     return {
-      status: 'demo_mode',
-      message: 'Data retention check not applicable in demo mode',
+      status: "demo_mode",
+      message: "Data retention check not applicable in demo mode",
     }
   }
 
@@ -249,7 +247,7 @@ export async function checkDataRetention(): Promise<any> {
           lt: retentionDate,
         },
         status: {
-          in: ['TERMINATED', 'SUSPENDED'],
+          in: ["TERMINATED", "SUSPENDED"],
         },
       },
       select: {
@@ -261,23 +259,22 @@ export async function checkDataRetention(): Promise<any> {
     })
 
     return {
-      status: 'completed',
+      status: "completed",
       retention_period_days: GDPR_CONFIG.dataRetentionDays,
       records_for_review: oldSubscribers.length,
-      records: oldSubscribers.map(sub => ({
+      records: oldSubscribers.map((sub) => ({
         id: sub.id,
-        msisdn: maskSensitiveData(sub.msisdn, 'phone'),
+        msisdn: maskSensitiveData(sub.msisdn, "phone"),
         created_at: sub.createdAt,
         status: sub.status,
         days_old: Math.floor((Date.now() - sub.createdAt.getTime()) / (1000 * 60 * 60 * 24)),
       })),
     }
-
   } catch (error) {
-    console.error('Data retention check failed:', error)
+    console.error("Data retention check failed:", error)
     return {
-      status: 'error',
-      message: 'Failed to check data retention compliance',
+      status: "error",
+      message: "Failed to check data retention compliance",
     }
   }
 }
@@ -286,37 +283,37 @@ export async function checkDataRetention(): Promise<any> {
 export function generatePrivacyNotice(): any {
   return {
     data_controller: {
-      name: 'FraudGuard 360°',
-      contact: 'privacy@fraudguard.com',
-      dpo_contact: 'dpo@fraudguard.com',
+      name: "FraudGuard 360°",
+      contact: "privacy@fraudguard.com",
+      dpo_contact: "dpo@fraudguard.com",
     },
     data_processing: {
-      purpose: 'Fraud detection and prevention in telecommunications',
+      purpose: "Fraud detection and prevention in telecommunications",
       lawful_basis: LawfulBasis.LEGITIMATE_INTERESTS,
       categories_of_data: [
-        'Personal identifiers (MSISDN, IMSI, IMEI)',
-        'Communication data (call records, SMS)',
-        'Location data (cell tower information)',
-        'Usage patterns and behavioral data',
-        'Risk assessment scores',
+        "Personal identifiers (MSISDN, IMSI, IMEI)",
+        "Communication data (call records, SMS)",
+        "Location data (cell tower information)",
+        "Usage patterns and behavioral data",
+        "Risk assessment scores",
       ],
       retention_period: `${GDPR_CONFIG.dataRetentionDays} days`,
       automated_decision_making: true,
       profiling: true,
     },
     data_subject_rights: [
-      'Right to access your personal data',
-      'Right to rectify inaccurate data',
-      'Right to erasure (right to be forgotten)',
-      'Right to restrict processing',
-      'Right to data portability',
-      'Right to object to processing',
-      'Right to withdraw consent',
+      "Right to access your personal data",
+      "Right to rectify inaccurate data",
+      "Right to erasure (right to be forgotten)",
+      "Right to restrict processing",
+      "Right to data portability",
+      "Right to object to processing",
+      "Right to withdraw consent",
     ],
     contact_information: {
-      email: 'privacy@fraudguard.com',
-      phone: '+1-800-PRIVACY',
-      address: 'Privacy Office, FraudGuard 360°',
+      email: "privacy@fraudguard.com",
+      phone: "+1-800-PRIVACY",
+      address: "Privacy Office, FraudGuard 360°",
     },
     last_updated: new Date().toISOString(),
   }

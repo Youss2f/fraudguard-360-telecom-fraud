@@ -16,6 +16,7 @@ The FraudGuard 360° platform provides a comprehensive REST API with enterprise-
 ## 🔐 **Authentication**
 
 ### **JWT Token Authentication**
+
 ```bash
 # Login to get JWT token
 POST /api/auth/login
@@ -41,12 +42,14 @@ Content-Type: application/json
 ```
 
 ### **Using JWT Token**
+
 ```bash
 # Include token in Authorization header
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ### **API Key Authentication**
+
 ```bash
 # Alternative authentication method
 X-API-Key: your-api-key-here
@@ -57,19 +60,23 @@ X-API-Key: your-api-key-here
 ## 🚨 **Fraud Detection**
 
 ### **GET** `/api/fraud/detect/{id}`
+
 Perform real-time fraud detection analysis for a subscriber.
 
 **Parameters:**
+
 - `id` (path): Subscriber identifier (MSISDN or IMSI)
 - `refresh` (query, optional): Force fresh analysis (true/false)
 
 **Example Request:**
+
 ```bash
 GET /api/fraud/detect/+1555123456?refresh=true
 Authorization: Bearer your-jwt-token
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -110,14 +117,17 @@ Authorization: Bearer your-jwt-token
 ## 📁 **CDR Processing**
 
 ### **GET** `/api/cdr/process`
+
 Process CDR (Call Detail Record) files or generate sample data.
 
 **Parameters:**
+
 - `action` (query): "process" or "generate_sample"
 - `format` (query): "csv", "xml", or "json" (for sample generation)
 - `records` (query): Number of records to generate (default: 100)
 
 **Example Requests:**
+
 ```bash
 # Process all CDR files
 GET /api/cdr/process?action=process
@@ -129,6 +139,7 @@ Authorization: Bearer your-jwt-token
 ```
 
 **Response (Process):**
+
 ```json
 {
   "success": true,
@@ -161,14 +172,17 @@ Authorization: Bearer your-jwt-token
 ## 📡 **Real-Time Streaming**
 
 ### **GET** `/api/streaming/events`
+
 Control and monitor real-time event streaming.
 
 **Parameters:**
+
 - `action` (query): "status", "start", "stop", or "latest"
 - `type` (query): Event type filter for latest events
 - `limit` (query): Number of events to return (default: 50)
 
 **Example Requests:**
+
 ```bash
 # Get streaming status
 GET /api/streaming/events?action=status
@@ -184,20 +198,23 @@ Authorization: Bearer your-jwt-token
 ```
 
 ### **GET** `/api/streaming/sse`
+
 Server-Sent Events endpoint for real-time updates.
 
 **Parameters:**
+
 - `types` (query): Comma-separated event types to subscribe to
 - `client_id` (query): Unique client identifier
 
 **Example:**
-```javascript
-const eventSource = new EventSource('/api/streaming/sse?types=FRAUD_ALERT,NEW_CALL');
 
-eventSource.onmessage = function(event) {
-  const data = JSON.parse(event.data);
-  console.log('Real-time event:', data);
-};
+```javascript
+const eventSource = new EventSource("/api/streaming/sse?types=FRAUD_ALERT,NEW_CALL")
+
+eventSource.onmessage = function (event) {
+  const data = JSON.parse(event.data)
+  console.log("Real-time event:", data)
+}
 ```
 
 ---
@@ -205,13 +222,16 @@ eventSource.onmessage = function(event) {
 ## 📊 **Monitoring & Performance**
 
 ### **GET** `/api/monitoring/performance`
+
 Get system performance metrics and health information.
 
 **Parameters:**
+
 - `health` (query): Include health check data (true/false)
 - `details` (query): Include detailed metrics (true/false)
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -246,9 +266,11 @@ Get system performance metrics and health information.
 ```
 
 ### **GET** `/api/health`
+
 Comprehensive system health check.
 
 **Response:**
+
 ```json
 {
   "timestamp": "2024-01-15T10:30:00Z",
@@ -290,19 +312,23 @@ Comprehensive system health check.
 ## 👤 **Subscriber Data**
 
 ### **GET** `/api/subscribers/{id}`
+
 Retrieve comprehensive subscriber information and analytics.
 
 **Parameters:**
+
 - `id` (path): Subscriber identifier (MSISDN or IMSI)
 - `include` (query): Comma-separated list of data to include
 
 **Example Request:**
+
 ```bash
 GET /api/subscribers/+1555123456?include=calls,sms,data,fraud_analysis
 Authorization: Bearer your-jwt-token
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -336,9 +362,11 @@ Authorization: Bearer your-jwt-token
 ## 🔍 **Search & Analytics**
 
 ### **POST** `/api/search/subscribers`
+
 Advanced subscriber search with filters.
 
 **Request Body:**
+
 ```json
 {
   "query": {
@@ -365,6 +393,7 @@ Advanced subscriber search with filters.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -392,13 +421,16 @@ Advanced subscriber search with filters.
 ## 📈 **Analytics & Reports**
 
 ### **GET** `/api/analytics/dashboard`
+
 Get dashboard analytics data.
 
 **Parameters:**
+
 - `period` (query): Time period (1h, 24h, 7d, 30d)
 - `metrics` (query): Comma-separated metrics to include
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -411,12 +443,12 @@ Get dashboard analytics data.
     },
     "metrics": {
       "fraud_alerts_trend": [
-        {"timestamp": "2024-01-15T09:00:00Z", "count": 15},
-        {"timestamp": "2024-01-15T10:00:00Z", "count": 23}
+        { "timestamp": "2024-01-15T09:00:00Z", "count": 15 },
+        { "timestamp": "2024-01-15T10:00:00Z", "count": 23 }
       ],
       "top_risk_subscribers": [
-        {"msisdn": "+1555123456", "risk_score": 95},
-        {"msisdn": "+1555789012", "risk_score": 88}
+        { "msisdn": "+1555123456", "risk_score": 95 },
+        { "msisdn": "+1555789012", "risk_score": 88 }
       ]
     }
   }
@@ -428,6 +460,7 @@ Get dashboard analytics data.
 ## 🚨 **Error Handling**
 
 ### **Error Response Format**
+
 ```json
 {
   "success": false,
@@ -445,6 +478,7 @@ Get dashboard analytics data.
 ```
 
 ### **HTTP Status Codes**
+
 - `200` - Success
 - `400` - Bad Request (validation error)
 - `401` - Unauthorized (invalid/missing token)
@@ -458,6 +492,7 @@ Get dashboard analytics data.
 ## 📊 **Rate Limiting**
 
 ### **Rate Limit Headers**
+
 ```
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 95
@@ -465,6 +500,7 @@ X-RateLimit-Reset: 1642248600
 ```
 
 ### **Rate Limit Response**
+
 ```json
 {
   "success": false,
@@ -481,25 +517,27 @@ X-RateLimit-Reset: 1642248600
 ## 🔧 **SDK & Integration**
 
 ### **JavaScript/TypeScript SDK**
+
 ```typescript
-import { FraudGuardAPI } from '@fraudguard/sdk';
+import { FraudGuardAPI } from "@fraudguard/sdk"
 
 const api = new FraudGuardAPI({
-  baseURL: 'https://api.fraudguard.com',
-  apiKey: 'your-api-key'
-});
+  baseURL: "https://api.fraudguard.com",
+  apiKey: "your-api-key",
+})
 
 // Detect fraud
-const analysis = await api.fraud.detect('+1555123456');
-console.log(analysis.risk_score);
+const analysis = await api.fraud.detect("+1555123456")
+console.log(analysis.risk_score)
 
 // Stream real-time events
-api.streaming.subscribe(['FRAUD_ALERT'], (event) => {
-  console.log('New fraud alert:', event);
-});
+api.streaming.subscribe(["FRAUD_ALERT"], (event) => {
+  console.log("New fraud alert:", event)
+})
 ```
 
 ### **cURL Examples**
+
 ```bash
 # Get subscriber data
 curl -X GET "https://api.fraudguard.com/api/subscribers/+1555123456" \

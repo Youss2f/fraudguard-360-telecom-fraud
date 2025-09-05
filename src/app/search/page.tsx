@@ -253,18 +253,20 @@ export default function SearchPage() {
                         <h4 className="font-medium text-sm">{scenario.name}</h4>
                         <Badge
                           variant={
-                            scenario.riskLevel === "Critical" ? "destructive" :
-                            scenario.riskLevel === "High" ? "destructive" :
-                            scenario.riskLevel === "Medium" ? "default" : "secondary"
+                            scenario.riskLevel === "Critical"
+                              ? "destructive"
+                              : scenario.riskLevel === "High"
+                                ? "destructive"
+                                : scenario.riskLevel === "Medium"
+                                  ? "default"
+                                  : "secondary"
                           }
                           className="text-xs"
                         >
                           {scenario.riskLevel}
                         </Badge>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                        {scenario.description}
-                      </p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">{scenario.description}</p>
                       <div className="flex items-center gap-2 text-xs">
                         <Badge variant="outline" className="text-xs">
                           {scenario.searchType.toUpperCase()}: {scenario.searchQuery}
@@ -341,7 +343,7 @@ export default function SearchPage() {
                     variant="outline"
                     className={cn(
                       "w-full h-12 justify-start text-left font-normal border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-colors",
-                      !selectedDate && "text-muted-foreground",
+                      !selectedDate && "text-muted-foreground"
                     )}
                   >
                     <Calendar className="mr-3 h-5 w-5 text-blue-500" />

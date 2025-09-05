@@ -1,11 +1,11 @@
-import { logPerformance, createTimer } from './logger'
+import { logPerformance, createTimer } from "./logger"
 
 // Performance monitoring configuration
 const PERFORMANCE_CONFIG = {
-  enableMonitoring: process.env.ENABLE_PERFORMANCE_MONITORING !== 'false',
-  slowQueryThreshold: parseInt(process.env.SLOW_QUERY_THRESHOLD || '1000'), // 1 second
-  slowApiThreshold: parseInt(process.env.SLOW_API_THRESHOLD || '2000'), // 2 seconds
-  memoryWarningThreshold: parseInt(process.env.MEMORY_WARNING_THRESHOLD || '80'), // 80%
+  enableMonitoring: process.env.ENABLE_PERFORMANCE_MONITORING !== "false",
+  slowQueryThreshold: parseInt(process.env.SLOW_QUERY_THRESHOLD || "1000"), // 1 second
+  slowApiThreshold: parseInt(process.env.SLOW_API_THRESHOLD || "2000"), // 2 seconds
+  memoryWarningThreshold: parseInt(process.env.MEMORY_WARNING_THRESHOLD || "80"), // 80%
 }
 
 // Performance metrics store
@@ -55,7 +55,7 @@ export function trackDbQuery(operation: string, table: string, duration: number,
   if (!PERFORMANCE_CONFIG.enableMonitoring) return
 
   const key = `${operation}_${table}`
-  
+
   // Update query metrics
   const existing = metrics.dbQueries.get(key) || { count: 0, totalTime: 0, avgTime: 0 }
   existing.count++
@@ -79,9 +79,9 @@ export function trackMemoryUsage() {
 
   const memoryUsage = process.memoryUsage()
   const usagePercent = Math.round((memoryUsage.heapUsed / memoryUsage.heapTotal) * 100)
-  
+
   metrics.memoryUsage.push(usagePercent)
-  
+
   // Keep only last 100 measurements
   if (metrics.memoryUsage.length > 100) {
     metrics.memoryUsage.shift()
@@ -89,7 +89,7 @@ export function trackMemoryUsage() {
 
   // Log memory warnings
   if (usagePercent > PERFORMANCE_CONFIG.memoryWarningThreshold) {
-    logPerformance('HIGH_MEMORY_USAGE', usagePercent, {
+    logPerformance("HIGH_MEMORY_USAGE", usagePercent, {
       threshold: PERFORMANCE_CONFIG.memoryWarningThreshold,
       heapUsed: Math.round(memoryUsage.heapUsed / 1024 / 1024), // MB
       heapTotal: Math.round(memoryUsage.heapTotal / 1024 / 1024), // MB
@@ -105,9 +105,10 @@ export function getPerformanceSummary() {
     dbQueries: Object.fromEntries(metrics.dbQueries),
     memoryUsage: {
       current: metrics.memoryUsage[metrics.memoryUsage.length - 1] || 0,
-      average: metrics.memoryUsage.length > 0 
-        ? Math.round(metrics.memoryUsage.reduce((a, b) => a + b, 0) / metrics.memoryUsage.length)
-        : 0,
+      average:
+        metrics.memoryUsage.length > 0
+          ? Math.round(metrics.memoryUsage.reduce((a, b) => a + b, 0) / metrics.memoryUsage.length)
+          : 0,
       max: Math.max(...metrics.memoryUsage, 0),
     },
     errorRates: Object.fromEntries(
@@ -125,10 +126,7 @@ export function getPerformanceSummary() {
 }
 
 // Performance middleware wrapper
-export function withPerformanceTracking<T extends any[], R>(
-  operation: string,
-  handler: (...args: T) => Promise<R>
-) {
+export function withPerformanceTracking<T extends any[], R>(operation: string, handler: (...args: T) => Promise<R>) {
   return async (...args: T): Promise<R> => {
     if (!PERFORMANCE_CONFIG.enableMonitoring) {
       return handler(...args)
@@ -136,7 +134,7 @@ export function withPerformanceTracking<T extends any[], R>(
 
     const timer = createTimer()
     let success = true
-    
+
     try {
       const result = await handler(...args)
       return result
@@ -163,7 +161,7 @@ export function withDbPerformanceTracking<T extends any[], R>(
 
     const timer = createTimer()
     let success = true
-    
+
     try {
       const result = await handler(...args)
       return result
@@ -190,14 +188,14 @@ export function startPerformanceMonitoring() {
     trackMemoryUsage()
   }, 30000)
 
-  console.log('Performance monitoring started')
+  // Performance monitoring started
 }
 
 export function stopPerformanceMonitoring() {
   if (memoryMonitorInterval) {
     clearInterval(memoryMonitorInterval)
     memoryMonitorInterval = null
-    console.log('Performance monitoring stopped')
+    // Performance monitoring stopped
   }
 }
 
@@ -212,9 +210,9 @@ export function resetMetrics() {
 // Performance health check
 export function getPerformanceHealth() {
   const summary = getPerformanceSummary()
-  
+
   const issues: string[] = []
-  
+
   // Check for slow API endpoints
   Object.entries(summary.apiCalls).forEach(([endpoint, stats]) => {
     if (stats.avgTime > PERFORMANCE_CONFIG.slowApiThreshold) {
@@ -236,13 +234,14 @@ export function getPerformanceHealth() {
 
   // Check error rates
   Object.entries(summary.errorRates).forEach(([endpoint, stats]) => {
-    if (stats.errorRate > 10) { // More than 10% error rate
+    if (stats.errorRate > 10) {
+      // More than 10% error rate
       issues.push(`High error rate: ${endpoint} (${stats.errorRate}%)`)
     }
   })
 
   return {
-    status: issues.length === 0 ? 'healthy' : 'degraded',
+    status: issues.length === 0 ? "healthy" : "degraded",
     issues,
     summary,
   }

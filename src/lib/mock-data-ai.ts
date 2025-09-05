@@ -5,7 +5,7 @@ import { getScenarioByQuery } from "./demo-scenarios"
 export function generateMockDataWithAI(
   searchQuery: string,
   searchType: "msisdn" | "imsi",
-  dateRange?: { start: Date; end: Date },
+  dateRange?: { start: Date; end: Date }
 ): SubscriberData {
   // Check if this is a demo scenario
   const scenario = getScenarioByQuery(searchQuery, searchType)
@@ -40,16 +40,19 @@ function generateAIAnalysis(data: any, searchQuery: string, scenario?: any): AIA
   // Behavioral analysis
   if (hasBulkSMS) behavioralScore += scenario?.riskLevel === "Critical" ? 15 : 5
   if (data.smsActivity.stats.avgPerDay > 100) behavioralScore += scenario?.riskLevel === "Critical" ? 10 : 3
-  if (data.localCallActivity?.stats?.totalCalls?.outgoing > 500) behavioralScore += scenario?.riskLevel === "Critical" ? 8 : 2
+  if (data.localCallActivity?.stats?.totalCalls?.outgoing > 500)
+    behavioralScore += scenario?.riskLevel === "Critical" ? 8 : 2
 
   // Network analysis
   if (hasInternationalCalls) networkScore += scenario?.riskLevel === "Critical" ? 12 : 3
-  if (data.internationalCallActivity.destinations.some((d) => d.riskLevel === "High")) networkScore += scenario?.riskLevel === "Critical" ? 15 : 2
+  if (data.internationalCallActivity.destinations.some((d: any) => d.riskLevel === "High"))
+    networkScore += scenario?.riskLevel === "Critical" ? 15 : 2
   if (data.overallActivity.summary.distinctCellSites > 50) networkScore += scenario?.riskLevel === "Critical" ? 8 : 1
 
   // Device analysis
   if (hasDeviceSwitching) deviceScore += scenario?.riskLevel === "Critical" ? 10 : 2
-  if (data.dataUsage?.tetheringChecks?.some((t) => t.suspiciousActivity)) deviceScore += scenario?.riskLevel === "Critical" ? 8 : 1
+  if (data.dataUsage?.tetheringChecks?.some((t: any) => t.suspiciousActivity))
+    deviceScore += scenario?.riskLevel === "Critical" ? 8 : 1
   if (data.overview.deviceInfo.imeiHistory.length > 2) deviceScore += scenario?.riskLevel === "Critical" ? 5 : 1
 
   // Velocity analysis
@@ -65,7 +68,7 @@ function generateAIAnalysis(data: any, searchQuery: string, scenario?: any): AIA
 
   // Calculate overall risk score
   const overallRiskScore = Math.round(
-    behavioralScore * 0.3 + networkScore * 0.25 + deviceScore * 0.2 + velocityScore * 0.25,
+    behavioralScore * 0.3 + networkScore * 0.25 + deviceScore * 0.2 + velocityScore * 0.25
   )
 
   // Generate risk factors
@@ -76,7 +79,7 @@ function generateAIAnalysis(data: any, searchQuery: string, scenario?: any): AIA
   if (hasHighValueRecharges) riskFactors.push("High Value Transactions")
   if (hasSuspiciousDealer) riskFactors.push("Suspicious Dealer Association")
   if (data.overallActivity.summary.distinctCellSites > 40) riskFactors.push("High Mobility Pattern")
-  if (data.dataUsage.tetheringChecks.some((t) => t.suspiciousActivity)) riskFactors.push("Potential Tethering")
+  if (data.dataUsage.tetheringChecks.some((t: any) => t.suspiciousActivity)) riskFactors.push("Potential Tethering")
 
   // Generate anomalies
   const anomalies = {

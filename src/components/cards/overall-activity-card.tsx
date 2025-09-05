@@ -5,7 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BarChart3, TrendingUp, MapPin, Smartphone, ChevronDown, ChevronUp, Phone, MessageSquare, Wifi } from 'lucide-react'
+import {
+  BarChart3,
+  TrendingUp,
+  MapPin,
+  Smartphone,
+  ChevronDown,
+  ChevronUp,
+  Phone,
+  MessageSquare,
+  Wifi,
+} from "lucide-react"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Bar, BarChart } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { OverallActivity, FilterState } from "@/types/subscriber"
@@ -29,16 +39,12 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
             <BarChart3 className="h-5 w-5" />
             Overall Activity
           </CardTitle>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
+          <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
             {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </div>
       </CardHeader>
-      
+
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-4">
@@ -47,7 +53,7 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
             <TabsTrigger value="locations">Locations</TabsTrigger>
             <TabsTrigger value="devices">Devices</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="overview" className="space-y-4">
             {/* Summary Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -61,7 +67,7 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
                   {data.summary.totalCalls.outgoing} out / {data.summary.totalCalls.incoming} in
                 </div>
               </div>
-              
+
               <div className="text-center p-3 bg-green-50 rounded-lg">
                 <MessageSquare className="h-6 w-6 mx-auto mb-2 text-green-600" />
                 <div className="text-2xl font-bold text-green-600">
@@ -72,20 +78,16 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
                   {data.summary.totalSms.sent} sent / {data.summary.totalSms.received} received
                 </div>
               </div>
-              
+
               <div className="text-center p-3 bg-purple-50 rounded-lg">
                 <Wifi className="h-6 w-6 mx-auto mb-2 text-purple-600" />
-                <div className="text-2xl font-bold text-purple-600">
-                  {data.summary.totalDataSessions}
-                </div>
+                <div className="text-2xl font-bold text-purple-600">{data.summary.totalDataSessions}</div>
                 <div className="text-sm text-gray-600">Data Sessions</div>
               </div>
-              
+
               <div className="text-center p-3 bg-orange-50 rounded-lg">
                 <TrendingUp className="h-6 w-6 mx-auto mb-2 text-orange-600" />
-                <div className="text-2xl font-bold text-orange-600">
-                  {data.summary.internationalCalls}
-                </div>
+                <div className="text-2xl font-bold text-orange-600">{data.summary.internationalCalls}</div>
                 <div className="text-sm text-gray-600">Intl Calls</div>
               </div>
             </div>
@@ -99,7 +101,7 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
                 </div>
                 <Badge variant="secondary">{data.summary.distinctImeis}</Badge>
               </div>
-              
+
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-gray-600" />
@@ -109,44 +111,29 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
               </div>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="trends" className="space-y-4">
             <div className="h-64">
               <ChartContainer
                 config={{
                   calls: { label: "Calls", color: "hsl(var(--chart-1))" },
                   sms: { label: "SMS", color: "hsl(var(--chart-2))" },
-                  data: { label: "Data Sessions", color: "hsl(var(--chart-3))" }
+                  data: { label: "Data Sessions", color: "hsl(var(--chart-3))" },
                 }}
                 className="h-full"
               >
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={data.timeSeries}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="date" 
-                      tickFormatter={(value) => new Date(value).toLocaleDateString()}
-                    />
+                    <XAxis dataKey="date" tickFormatter={(value) => new Date(value).toLocaleDateString()} />
                     <YAxis />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Line 
-                      type="monotone" 
-                      dataKey="calls" 
-                      stroke="var(--color-calls)" 
-                      strokeWidth={2}
-                      name="Calls"
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="sms" 
-                      stroke="var(--color-sms)" 
-                      strokeWidth={2}
-                      name="SMS"
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="data" 
-                      stroke="var(--color-data)" 
+                    <Line type="monotone" dataKey="calls" stroke="var(--color-calls)" strokeWidth={2} name="Calls" />
+                    <Line type="monotone" dataKey="sms" stroke="var(--color-sms)" strokeWidth={2} name="SMS" />
+                    <Line
+                      type="monotone"
+                      dataKey="data"
+                      stroke="var(--color-data)"
                       strokeWidth={2}
                       name="Data Sessions"
                     />
@@ -155,7 +142,7 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
               </ChartContainer>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="locations" className="space-y-4">
             <div className="space-y-2">
               <h4 className="font-semibold">Top Cell Sites</h4>
@@ -177,17 +164,17 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
               ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="devices" className="space-y-4">
             <div className="space-y-2">
               <h4 className="font-semibold">Device Switching History</h4>
               {data.deviceSwitching.map((device, index) => (
-                <div 
+                <div
                   key={`${device.imei}-${device.date}`}
                   className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
-                    highlightedImei === device.imei 
-                      ? 'bg-blue-100 border border-blue-300' 
-                      : 'bg-gray-50 hover:bg-gray-100'
+                    highlightedImei === device.imei
+                      ? "bg-blue-100 border border-blue-300"
+                      : "bg-gray-50 hover:bg-gray-100"
                   }`}
                   onClick={() => onImeiHighlight(highlightedImei === device.imei ? null : device.imei)}
                 >
@@ -199,12 +186,8 @@ export function OverallActivityCard({ data, filters, onImeiHighlight, highlighte
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-medium">
-                      {new Date(device.date).toLocaleDateString()}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {new Date(device.date).toLocaleTimeString()}
-                    </div>
+                    <div className="text-sm font-medium">{new Date(device.date).toLocaleDateString()}</div>
+                    <div className="text-xs text-gray-500">{new Date(device.date).toLocaleTimeString()}</div>
                   </div>
                 </div>
               ))}

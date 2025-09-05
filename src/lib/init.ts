@@ -1,8 +1,8 @@
-import { connectDatabase, checkDatabaseHealth } from './database'
-import { initializeCache, checkCacheHealth } from './cache'
-import { startPerformanceMonitoring } from './performance'
-import { startRealTimeStream, getStreamStatus } from './real-time-streaming'
-import { logSystemHealth } from './logger'
+import { connectDatabase, checkDatabaseHealth } from "./database"
+import { initializeCache, checkCacheHealth } from "./cache"
+import { startPerformanceMonitoring } from "./performance"
+import { startRealTimeStream, getStreamStatus } from "./real-time-streaming"
+import { logSystemHealth } from "./logger"
 
 // Application initialization status
 interface InitStatus {
@@ -23,7 +23,7 @@ let initializationStatus: InitStatus = {
 
 // Initialize all application services
 export async function initializeApplication(): Promise<InitStatus> {
-  console.log('🚀 Initializing FraudGuard 360° Application...')
+  // Initializing FraudGuard 360° Application
 
   const results: InitStatus = {
     database: false,
@@ -35,62 +35,64 @@ export async function initializeApplication(): Promise<InitStatus> {
 
   // Initialize database connection
   try {
-    console.log('📊 Initializing database connection...')
+    // Initializing database connection
     results.database = await connectDatabase()
-    
+
     if (results.database) {
-      console.log('✅ Database connection established')
-      logSystemHealth('database', 'healthy')
+      // Database connection established
+      logSystemHealth("database", "healthy")
     } else {
-      console.log('⚠️  Database connection failed, using mock data fallback')
-      logSystemHealth('database', 'degraded', { fallback: 'mock_data' })
+      // Database connection failed, using mock data fallback
+      logSystemHealth("database", "degraded", { fallback: "mock_data" })
     }
   } catch (error) {
-    console.error('❌ Database initialization failed:', error)
-    logSystemHealth('database', 'unhealthy', { error: error instanceof Error ? error.message : 'Unknown' })
+    console.error("❌ Database initialization failed:", error)
+    logSystemHealth("database", "unhealthy", { error: error instanceof Error ? error.message : "Unknown" })
   }
 
   // Initialize cache system
   try {
-    console.log('🗄️  Initializing cache system...')
+    // Initializing cache system
     results.cache = await initializeCache()
-    
+
     if (results.cache) {
-      console.log('✅ Cache system initialized (Redis)')
-      logSystemHealth('cache', 'healthy', { type: 'redis' })
+      // Cache system initialized (Redis)
+      logSystemHealth("cache", "healthy", { type: "redis" })
     } else {
-      console.log('⚠️  Redis unavailable, using memory cache fallback')
-      logSystemHealth('cache', 'degraded', { fallback: 'memory_cache' })
+      // Redis unavailable, using memory cache fallback
+      logSystemHealth("cache", "degraded", { fallback: "memory_cache" })
       results.cache = true // Memory cache is always available
     }
   } catch (error) {
-    console.error('❌ Cache initialization failed:', error)
-    logSystemHealth('cache', 'unhealthy', { error: error instanceof Error ? error.message : 'Unknown' })
+    console.error("❌ Cache initialization failed:", error)
+    logSystemHealth("cache", "unhealthy", { error: error instanceof Error ? error.message : "Unknown" })
     results.cache = true // Memory cache fallback
   }
 
   // Initialize performance monitoring
   try {
-    console.log('📈 Initializing performance monitoring...')
+    // Initializing performance monitoring
     startPerformanceMonitoring()
     results.performance = true
-    console.log('✅ Performance monitoring started')
-    logSystemHealth('performance_monitoring', 'healthy')
+    // Performance monitoring started
+    logSystemHealth("performance_monitoring", "healthy")
   } catch (error) {
-    console.error('❌ Performance monitoring initialization failed:', error)
-    logSystemHealth('performance_monitoring', 'unhealthy', { error: error instanceof Error ? error.message : 'Unknown' })
+    console.error("❌ Performance monitoring initialization failed:", error)
+    logSystemHealth("performance_monitoring", "unhealthy", {
+      error: error instanceof Error ? error.message : "Unknown",
+    })
   }
 
   // Initialize real-time streaming
   try {
-    console.log('📡 Initializing real-time streaming...')
+    // Initializing real-time streaming
     startRealTimeStream()
     results.streaming = true
-    console.log('✅ Real-time streaming started')
-    logSystemHealth('real_time_streaming', 'healthy')
+    // Real-time streaming started
+    logSystemHealth("real_time_streaming", "healthy")
   } catch (error) {
-    console.error('❌ Real-time streaming initialization failed:', error)
-    logSystemHealth('real_time_streaming', 'unhealthy', { error: error instanceof Error ? error.message : 'Unknown' })
+    console.error("❌ Real-time streaming initialization failed:", error)
+    logSystemHealth("real_time_streaming", "unhealthy", { error: error instanceof Error ? error.message : "Unknown" })
   }
 
   // Determine overall status
@@ -100,19 +102,14 @@ export async function initializeApplication(): Promise<InitStatus> {
   initializationStatus = results
 
   // Log initialization summary
-  console.log('\n📋 Initialization Summary:')
-  console.log(`   Database: ${results.database ? '✅ Connected' : '⚠️  Mock Data Fallback'}`)
-  console.log(`   Cache: ${results.cache ? '✅ Available' : '❌ Unavailable'}`)
-  console.log(`   Performance: ${results.performance ? '✅ Monitoring Active' : '❌ Monitoring Disabled'}`)
-  console.log(`   Streaming: ${results.streaming ? '✅ Real-time Active' : '❌ Streaming Disabled'}`)
-  console.log(`   Overall: ${results.overall ? '✅ Application Ready' : '❌ Critical Failure'}`)
+  // Initialization Summary logged
 
   if (results.overall) {
-    console.log('\n🎉 FraudGuard 360° Application Successfully Initialized!')
-    logSystemHealth('application', 'healthy', results)
+    // FraudGuard 360° Application Successfully Initialized
+    logSystemHealth("application", "healthy", results)
   } else {
-    console.log('\n⚠️  Application initialized with limited functionality')
-    logSystemHealth('application', 'degraded', results)
+    // Application initialized with limited functionality
+    logSystemHealth("application", "degraded", results)
   }
 
   return results
@@ -127,31 +124,31 @@ export function getInitializationStatus(): InitStatus {
 export async function performHealthCheck(): Promise<any> {
   const healthStatus = {
     timestamp: new Date().toISOString(),
-    overall_status: 'healthy',
+    overall_status: "healthy",
     services: {
       application: {
-        status: 'healthy',
+        status: "healthy",
         uptime: Math.floor(process.uptime()),
         memory_usage: Math.round((process.memoryUsage().heapUsed / process.memoryUsage().heapTotal) * 100),
         node_version: process.version,
       },
       database: {
-        status: 'unknown',
+        status: "unknown",
         details: {},
       },
       cache: {
-        status: 'unknown',
+        status: "unknown",
         details: {},
       },
       initialization: initializationStatus,
     },
     environment: {
       node_env: process.env.NODE_ENV,
-      enable_real_data: process.env.ENABLE_REAL_DATA === 'true',
-      enable_demo_mode: process.env.ENABLE_DEMO_MODE === 'true',
-      enable_encryption: process.env.ENABLE_ENCRYPTION === 'true',
-      enable_cache: process.env.ENABLE_REDIS_CACHE !== 'false',
-      enable_performance_monitoring: process.env.ENABLE_PERFORMANCE_MONITORING !== 'false',
+      enable_real_data: process.env.ENABLE_REAL_DATA === "true",
+      enable_demo_mode: process.env.ENABLE_DEMO_MODE === "true",
+      enable_encryption: process.env.ENABLE_ENCRYPTION === "true",
+      enable_cache: process.env.ENABLE_REDIS_CACHE !== "false",
+      enable_performance_monitoring: process.env.ENABLE_PERFORMANCE_MONITORING !== "false",
     },
   }
 
@@ -164,8 +161,8 @@ export async function performHealthCheck(): Promise<any> {
     }
   } catch (error) {
     healthStatus.services.database = {
-      status: 'error',
-      details: { error: error instanceof Error ? error.message : 'Unknown error' },
+      status: "error",
+      details: { error: error instanceof Error ? error.message : "Unknown error" },
     }
   }
 
@@ -178,8 +175,8 @@ export async function performHealthCheck(): Promise<any> {
     }
   } catch (error) {
     healthStatus.services.cache = {
-      status: 'error',
-      details: { error: error instanceof Error ? error.message : 'Unknown error' },
+      status: "error",
+      details: { error: error instanceof Error ? error.message : "Unknown error" },
     }
   }
 
@@ -190,12 +187,12 @@ export async function performHealthCheck(): Promise<any> {
     healthStatus.services.cache.status,
   ]
 
-  if (serviceStatuses.includes('unhealthy') || serviceStatuses.includes('error')) {
-    healthStatus.overall_status = 'unhealthy'
-  } else if (serviceStatuses.includes('degraded')) {
-    healthStatus.overall_status = 'degraded'
+  if (serviceStatuses.includes("unhealthy") || serviceStatuses.includes("error")) {
+    healthStatus.overall_status = "unhealthy"
+  } else if (serviceStatuses.includes("degraded")) {
+    healthStatus.overall_status = "degraded"
   } else {
-    healthStatus.overall_status = 'healthy'
+    healthStatus.overall_status = "healthy"
   }
 
   return healthStatus
@@ -203,77 +200,76 @@ export async function performHealthCheck(): Promise<any> {
 
 // Graceful shutdown
 export async function gracefulShutdown(): Promise<void> {
-  console.log('🛑 Initiating graceful shutdown...')
+  // Initiating graceful shutdown
 
   try {
     // Stop performance monitoring
-    const { stopPerformanceMonitoring } = await import('./performance')
+    const { stopPerformanceMonitoring } = await import("./performance")
     stopPerformanceMonitoring()
-    console.log('✅ Performance monitoring stopped')
+    // Performance monitoring stopped
 
     // Disconnect cache
-    const { disconnectCache } = await import('./cache')
+    const { disconnectCache } = await import("./cache")
     await disconnectCache()
-    console.log('✅ Cache disconnected')
+    // Cache disconnected
 
     // Disconnect database
-    const { disconnectDatabase } = await import('./database')
+    const { disconnectDatabase } = await import("./database")
     await disconnectDatabase()
-    console.log('✅ Database disconnected')
+    // Database disconnected
 
-    console.log('✅ Graceful shutdown completed')
-
+    // Graceful shutdown completed
   } catch (error) {
-    console.error('❌ Error during graceful shutdown:', error)
+    console.error("❌ Error during graceful shutdown:", error)
   }
 }
 
 // Setup process event handlers
 export function setupProcessHandlers(): void {
   // Graceful shutdown on SIGTERM
-  process.on('SIGTERM', async () => {
-    console.log('Received SIGTERM signal')
+  process.on("SIGTERM", async () => {
+    // Received SIGTERM signal
     await gracefulShutdown()
     process.exit(0)
   })
 
   // Graceful shutdown on SIGINT (Ctrl+C)
-  process.on('SIGINT', async () => {
-    console.log('Received SIGINT signal')
+  process.on("SIGINT", async () => {
+    // Received SIGINT signal
     await gracefulShutdown()
     process.exit(0)
   })
 
   // Handle uncaught exceptions
-  process.on('uncaughtException', (error) => {
-    console.error('Uncaught Exception:', error)
-    logSystemHealth('application', 'unhealthy', { 
+  process.on("uncaughtException", (error) => {
+    console.error("Uncaught Exception:", error)
+    logSystemHealth("application", "unhealthy", {
       error: error.message,
-      stack: error.stack 
+      stack: error.stack,
     })
     // Don't exit immediately, let the application handle it
   })
 
   // Handle unhandled promise rejections
-  process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason)
-    logSystemHealth('application', 'unhealthy', { 
-      error: 'unhandled_rejection',
-      reason: reason instanceof Error ? reason.message : String(reason)
+  process.on("unhandledRejection", (reason, promise) => {
+    console.error("Unhandled Rejection at:", promise, "reason:", reason)
+    logSystemHealth("application", "unhealthy", {
+      error: "unhandled_rejection",
+      reason: reason instanceof Error ? reason.message : String(reason),
     })
   })
 
-  console.log('✅ Process event handlers configured')
+  // Process event handlers configured
 }
 
 // Initialize application on module load (for Next.js)
-if (typeof window === 'undefined') {
+if (typeof window === "undefined") {
   // Only run on server side
   setupProcessHandlers()
-  
+
   // Initialize application when the module is loaded
   initializeApplication().catch((error) => {
-    console.error('Failed to initialize application:', error)
+    console.error("Failed to initialize application:", error)
   })
 }
 

@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Store, MapPin, Calendar, Users, AlertTriangle, ChevronDown, ChevronUp, Phone, TrendingUp } from 'lucide-react'
+import { Store, MapPin, Calendar, Users, AlertTriangle, ChevronDown, ChevronUp, Phone, TrendingUp } from "lucide-react"
 import { DealerAssociation, FilterState } from "@/types/subscriber"
 
 interface DealerAssociationCardProps {
@@ -53,24 +53,20 @@ export function DealerAssociationCard({ data, filters }: DealerAssociationCardPr
                 {data.dealerStats.suspiciousActivations} Suspicious
               </Badge>
             )}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="activations">Recent Activations</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="overview" className="space-y-4">
             {/* Dealer Information */}
             <div className="p-4 bg-gray-50 rounded-lg">
@@ -83,13 +79,13 @@ export function DealerAssociationCard({ data, filters }: DealerAssociationCardPr
                   </div>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-gray-500" />
                   <span>{data.dealerInfo.location}</span>
                 </div>
-                
+
                 <div className="flex items-center gap-2 text-sm">
                   <Calendar className="h-4 w-4 text-gray-500" />
                   <span>Activation: {new Date(data.dealerInfo.activationDate).toLocaleDateString()}</span>
@@ -106,7 +102,8 @@ export function DealerAssociationCard({ data, filters }: DealerAssociationCardPr
               <div className="text-sm text-gray-700">
                 <div>Cell Site: {data.dealerInfo.activationLocation.cellSite}</div>
                 <div className="text-xs text-gray-500 mt-1">
-                  Coordinates: {data.dealerInfo.activationLocation.coordinates.lat.toFixed(4)}, {data.dealerInfo.activationLocation.coordinates.lng.toFixed(4)}
+                  Coordinates: {data.dealerInfo.activationLocation.coordinates.lat.toFixed(4)},{" "}
+                  {data.dealerInfo.activationLocation.coordinates.lng.toFixed(4)}
                 </div>
               </div>
             </div>
@@ -115,25 +112,19 @@ export function DealerAssociationCard({ data, filters }: DealerAssociationCardPr
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center p-3 bg-green-50 rounded-lg">
                 <Users className="h-6 w-6 mx-auto mb-2 text-green-600" />
-                <div className="text-2xl font-bold text-green-600">
-                  {data.dealerStats.totalSubscribersActivated}
-                </div>
+                <div className="text-2xl font-bold text-green-600">{data.dealerStats.totalSubscribersActivated}</div>
                 <div className="text-sm text-gray-600">Total Activations</div>
               </div>
-              
+
               <div className="text-center p-3 bg-blue-50 rounded-lg">
                 <TrendingUp className="h-6 w-6 mx-auto mb-2 text-blue-600" />
-                <div className="text-2xl font-bold text-blue-600">
-                  {data.dealerStats.activationsLast30Days}
-                </div>
+                <div className="text-2xl font-bold text-blue-600">{data.dealerStats.activationsLast30Days}</div>
                 <div className="text-sm text-gray-600">Last 30 Days</div>
               </div>
-              
+
               <div className="text-center p-3 bg-red-50 rounded-lg">
                 <AlertTriangle className="h-6 w-6 mx-auto mb-2 text-red-600" />
-                <div className="text-2xl font-bold text-red-600">
-                  {data.dealerStats.suspiciousActivations}
-                </div>
+                <div className="text-2xl font-bold text-red-600">{data.dealerStats.suspiciousActivations}</div>
                 <div className="text-sm text-gray-600">Suspicious</div>
               </div>
             </div>
@@ -145,23 +136,24 @@ export function DealerAssociationCard({ data, filters }: DealerAssociationCardPr
                 <AlertDescription className="text-red-800">
                   <div className="font-semibold mb-2">Suspicious Activation Activity Detected</div>
                   <div className="text-sm">
-                    This dealer has {data.dealerStats.suspiciousActivations} suspicious activations. Manual review recommended.
+                    This dealer has {data.dealerStats.suspiciousActivations} suspicious activations. Manual review
+                    recommended.
                   </div>
                 </AlertDescription>
               </Alert>
             )}
           </TabsContent>
-          
+
           <TabsContent value="activations" className="space-y-4">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h4 className="font-semibold">Recent Activations by This Dealer</h4>
                 <Badge variant="outline">{data.recentActivations.length} records</Badge>
               </div>
-              
+
               <div className="space-y-2">
                 {data.recentActivations.map((activation) => (
-                  <div 
+                  <div
                     key={activation.msisdn}
                     className="flex items-center justify-between p-3 bg-white border rounded-lg"
                   >
@@ -174,19 +166,13 @@ export function DealerAssociationCard({ data, filters }: DealerAssociationCardPr
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
-                      <Badge variant={getStatusColor(activation.status)}>
-                        {activation.status}
-                      </Badge>
+                      <Badge variant={getStatusColor(activation.status)}>{activation.status}</Badge>
                       {activation.riskFlags.length > 0 && (
                         <div className="flex gap-1">
                           {activation.riskFlags.map((flag, index) => (
-                            <Badge
-                              key={index}
-                              variant={getRiskFlagColor(flag)}
-                              className="text-xs"
-                            >
+                            <Badge key={index} variant={getRiskFlagColor(flag)} className="text-xs">
                               {flag}
                             </Badge>
                           ))}

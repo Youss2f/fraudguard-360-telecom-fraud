@@ -172,8 +172,8 @@ export function CaseManagement() {
   const updateCaseStatus = (caseId: string, newStatus: string) => {
     setCases(
       cases.map((case_) =>
-        case_.id === caseId ? { ...case_, status: newStatus as any, updatedAt: new Date().toISOString() } : case_,
-      ),
+        case_.id === caseId ? { ...case_, status: newStatus as any, updatedAt: new Date().toISOString() } : case_
+      )
     )
     toast({
       title: "Case Updated",

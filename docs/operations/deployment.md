@@ -9,18 +9,20 @@ This guide covers all deployment options for FraudGuard 360°, from local develo
 ## 🎯 **Deployment Options**
 
 ### **📊 Deployment Matrix**
-| Environment | Method | Use Case | Complexity |
-|-------------|--------|----------|------------|
-| **Local Dev** | npm/Docker | Development, Testing | ⭐ |
-| **Demo** | Docker Compose | Demonstrations, POCs | ⭐⭐ |
-| **Staging** | Kubernetes | Pre-production Testing | ⭐⭐⭐ |
-| **Production** | Kubernetes + CI/CD | Live Production | ⭐⭐⭐⭐ |
+
+| Environment    | Method             | Use Case               | Complexity |
+| -------------- | ------------------ | ---------------------- | ---------- |
+| **Local Dev**  | npm/Docker         | Development, Testing   | ⭐         |
+| **Demo**       | Docker Compose     | Demonstrations, POCs   | ⭐⭐       |
+| **Staging**    | Kubernetes         | Pre-production Testing | ⭐⭐⭐     |
+| **Production** | Kubernetes + CI/CD | Live Production        | ⭐⭐⭐⭐   |
 
 ---
 
 ## 🏠 **Local Development**
 
 ### **Option 1: Demo Mode (Quickest)**
+
 ```bash
 # 1. Clone and setup
 git clone <repository-url>
@@ -39,6 +41,7 @@ npm run dev
 ```
 
 ### **Option 2: Production Mode (Database)**
+
 ```bash
 # 1. Install dependencies
 npm install --legacy-peer-deps
@@ -60,6 +63,7 @@ npm run dev
 ```
 
 ### **Environment Configuration**
+
 ```bash
 # .env.local
 NODE_ENV=development
@@ -75,6 +79,7 @@ ENABLE_REDIS_CACHE=false
 ## 🐳 **Docker Deployment**
 
 ### **Single Container (Development)**
+
 ```bash
 # Build and run
 docker build -t fraudguard-360 .
@@ -85,6 +90,7 @@ docker run -p 3000:3000 \
 ```
 
 ### **Docker Compose (Full Stack)**
+
 ```bash
 # Deploy complete stack
 docker-compose up -d
@@ -104,15 +110,16 @@ docker-compose down
 ```
 
 ### **Docker Compose Services**
+
 ```yaml
 # docker-compose.yml structure
 services:
-  fraudguard-app:     # Main application
-  postgres:           # Database
-  redis:              # Cache
-  prometheus:         # Metrics
-  grafana:           # Dashboards
-  nginx:             # Load balancer
+  fraudguard-app: # Main application
+  postgres: # Database
+  redis: # Cache
+  prometheus: # Metrics
+  grafana: # Dashboards
+  nginx: # Load balancer
 ```
 
 ---
@@ -120,6 +127,7 @@ services:
 ## ☸️ **Kubernetes Deployment**
 
 ### **Prerequisites**
+
 ```bash
 # Required tools
 kubectl >= 1.25
@@ -132,6 +140,7 @@ kubectl get nodes
 ```
 
 ### **Quick Kubernetes Deployment**
+
 ```bash
 # 1. Create namespace
 kubectl apply -f k8s/namespace.yaml
@@ -151,6 +160,7 @@ kubectl get services -n fraudguard
 ```
 
 ### **Automated Deployment Script**
+
 ```bash
 # Make script executable
 chmod +x scripts/deploy.sh
@@ -172,6 +182,7 @@ chmod +x scripts/deploy.sh
 ```
 
 ### **Kubernetes Configuration**
+
 ```yaml
 # Production deployment configuration
 apiVersion: apps/v1
@@ -189,27 +200,27 @@ spec:
   template:
     spec:
       containers:
-      - name: fraudguard-app
-        image: ghcr.io/your-org/fraudguard:latest
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - name: fraudguard-app
+          image: ghcr.io/your-org/fraudguard:latest
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ```
 
 ---
@@ -217,6 +228,7 @@ spec:
 ## 🔄 **CI/CD Deployment**
 
 ### **GitHub Actions Pipeline**
+
 ```yaml
 # .github/workflows/deploy.yml
 name: Deploy to Production
@@ -230,12 +242,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Build and Push Docker Image
         run: |
           docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} .
           docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
-      
+
       - name: Deploy to Kubernetes
         run: |
           kubectl set image deployment/fraudguard-app \
@@ -245,6 +257,7 @@ jobs:
 ```
 
 ### **Deployment Environments**
+
 ```bash
 # Development (automatic on feature branches)
 git push origin feature/new-feature
@@ -264,6 +277,7 @@ gh workflow run deploy.yml -f environment=production
 ## 🌐 **Cloud Provider Deployment**
 
 ### **AWS EKS**
+
 ```bash
 # 1. Create EKS cluster
 eksctl create cluster --name fraudguard-cluster \
@@ -279,6 +293,7 @@ aws eks update-kubeconfig --region us-west-2 --name fraudguard-cluster
 ```
 
 ### **Azure AKS**
+
 ```bash
 # 1. Create AKS cluster
 az aks create \
@@ -295,6 +310,7 @@ az aks get-credentials --resource-group fraudguard-rg --name fraudguard-cluster
 ```
 
 ### **Google GKE**
+
 ```bash
 # 1. Create GKE cluster
 gcloud container clusters create fraudguard-cluster \
@@ -314,6 +330,7 @@ gcloud container clusters get-credentials fraudguard-cluster --zone us-central1-
 ## 📊 **Monitoring Setup**
 
 ### **Prometheus & Grafana**
+
 ```bash
 # Deploy monitoring stack
 kubectl apply -f monitoring/prometheus.yaml
@@ -329,18 +346,19 @@ kubectl port-forward svc/grafana 3001:3000 -n monitoring
 ```
 
 ### **Alerting Configuration**
+
 ```yaml
 # monitoring/alert-rules.yaml
 groups:
-- name: fraudguard.rules
-  rules:
-  - alert: ApplicationDown
-    expr: up{job="fraudguard-app"} == 0
-    for: 1m
-    labels:
-      severity: critical
-    annotations:
-      summary: "FraudGuard application is down"
+  - name: fraudguard.rules
+    rules:
+      - alert: ApplicationDown
+        expr: up{job="fraudguard-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "FraudGuard application is down"
 ```
 
 ---
@@ -348,6 +366,7 @@ groups:
 ## 🔒 **Security Configuration**
 
 ### **TLS/SSL Setup**
+
 ```yaml
 # k8s/ingress.yaml
 apiVersion: networking.k8s.io/v1
@@ -359,23 +378,24 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   tls:
-  - hosts:
-    - fraudguard.yourdomain.com
-    secretName: fraudguard-tls
+    - hosts:
+        - fraudguard.yourdomain.com
+      secretName: fraudguard-tls
   rules:
-  - host: fraudguard.yourdomain.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: fraudguard-service
-            port:
-              number: 80
+    - host: fraudguard.yourdomain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fraudguard-service
+                port:
+                  number: 80
 ```
 
 ### **Network Policies**
+
 ```yaml
 # k8s/network-policy.yaml
 apiVersion: networking.k8s.io/v1
@@ -388,16 +408,16 @@ spec:
     matchLabels:
       app: fraudguard-app
   policyTypes:
-  - Ingress
-  - Egress
+    - Ingress
+    - Egress
   ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: ingress-nginx
-    ports:
-    - protocol: TCP
-      port: 3000
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3000
 ```
 
 ---
@@ -405,6 +425,7 @@ spec:
 ## 🔧 **Configuration Management**
 
 ### **Environment-Specific Configs**
+
 ```bash
 # Development
 cp .env.example .env.local
@@ -420,6 +441,7 @@ cp .env.example .env.production
 ```
 
 ### **Kubernetes Secrets**
+
 ```bash
 # Create secrets from environment file
 kubectl create secret generic fraudguard-secrets \
@@ -433,6 +455,7 @@ kubectl create secret generic database-secret \
 ```
 
 ### **ConfigMaps**
+
 ```bash
 # Create configmap from file
 kubectl create configmap fraudguard-config \
@@ -453,6 +476,7 @@ kubectl create configmap fraudguard-config \
 ### **Common Issues**
 
 #### **Application Won't Start**
+
 ```bash
 # Check pod status
 kubectl get pods -n fraudguard
@@ -464,6 +488,7 @@ kubectl logs -f deployment/fraudguard-app -n fraudguard
 ```
 
 #### **Database Connection Issues**
+
 ```bash
 # Test database connectivity
 kubectl exec -it <pod-name> -n fraudguard -- \
@@ -475,6 +500,7 @@ kubectl logs <postgres-pod> -n fraudguard
 ```
 
 #### **Performance Issues**
+
 ```bash
 # Check resource usage
 kubectl top pods -n fraudguard
@@ -486,6 +512,7 @@ kubectl describe hpa fraudguard-hpa -n fraudguard
 ```
 
 ### **Health Checks**
+
 ```bash
 # Application health
 curl http://localhost:3000/api/health
@@ -501,6 +528,7 @@ kubectl get ingress -n fraudguard
 ## 📈 **Scaling**
 
 ### **Horizontal Pod Autoscaler**
+
 ```yaml
 # k8s/hpa.yaml
 apiVersion: autoscaling/v2
@@ -516,21 +544,22 @@ spec:
   minReplicas: 3
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
 ```
 
 ### **Manual Scaling**
+
 ```bash
 # Scale deployment
 kubectl scale deployment fraudguard-app --replicas=5 -n fraudguard

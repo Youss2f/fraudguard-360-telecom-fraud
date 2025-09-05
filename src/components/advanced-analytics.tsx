@@ -6,11 +6,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  AlertTriangle, 
-  Shield, 
+import {
+  TrendingUp,
+  TrendingDown,
+  AlertTriangle,
+  Shield,
   Brain,
   Activity,
   Users,
@@ -19,9 +19,21 @@ import {
   Target,
   BarChart3,
   PieChart,
-  LineChart
+  LineChart,
 } from "lucide-react"
-import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, BarChart, Bar } from "recharts"
+import {
+  LineChart as RechartsLineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart as RechartsPieChart,
+  Cell,
+  BarChart,
+  Bar,
+} from "recharts"
 
 // Mock real-time data
 const generateRealTimeData = () => ({
@@ -30,29 +42,29 @@ const generateRealTimeData = () => ({
   riskAlerts: Math.floor(Math.random() * 10) + 5,
   networkHealth: Math.floor(Math.random() * 10) + 90,
   processingSpeed: Math.floor(Math.random() * 500) + 2000,
-  falsePositiveRate: Math.floor(Math.random() * 5) + 2
+  falsePositiveRate: Math.floor(Math.random() * 5) + 2,
 })
 
 const fraudTrends = Array.from({ length: 24 }, (_, i) => ({
   hour: i,
   fraudAttempts: Math.floor(Math.random() * 50) + 10,
   blocked: Math.floor(Math.random() * 40) + 30,
-  investigated: Math.floor(Math.random() * 20) + 5
+  investigated: Math.floor(Math.random() * 20) + 5,
 }))
 
 const riskDistribution = [
-  { name: 'Low Risk', value: 65, color: '#10B981' },
-  { name: 'Medium Risk', value: 25, color: '#F59E0B' },
-  { name: 'High Risk', value: 8, color: '#EF4444' },
-  { name: 'Critical', value: 2, color: '#DC2626' }
+  { name: "Low Risk", value: 65, color: "#10B981" },
+  { name: "Medium Risk", value: 25, color: "#F59E0B" },
+  { name: "High Risk", value: 8, color: "#EF4444" },
+  { name: "Critical", value: 2, color: "#DC2626" },
 ]
 
 const topFraudPatterns = [
-  { pattern: 'International Revenue Share', count: 45, trend: 'up' },
-  { pattern: 'Bulk SMS Operations', count: 32, trend: 'down' },
-  { pattern: 'Device Cloning', count: 28, trend: 'up' },
-  { pattern: 'SIM Swapping', count: 19, trend: 'stable' },
-  { pattern: 'Premium Rate Abuse', count: 15, trend: 'down' }
+  { pattern: "International Revenue Share", count: 45, trend: "up" },
+  { pattern: "Bulk SMS Operations", count: 32, trend: "down" },
+  { pattern: "Device Cloning", count: 28, trend: "up" },
+  { pattern: "SIM Swapping", count: 19, trend: "stable" },
+  { pattern: "Premium Rate Abuse", count: 15, trend: "down" },
 ]
 
 export function AdvancedAnalytics() {
@@ -81,15 +93,11 @@ export function AdvancedAnalytics() {
         </div>
         <div className="flex items-center gap-3">
           <Badge variant={isLive ? "default" : "secondary"} className="flex items-center gap-1">
-            <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
-            {isLive ? 'Live' : 'Paused'}
+            <div className={`w-2 h-2 rounded-full ${isLive ? "bg-green-500 animate-pulse" : "bg-gray-400"}`} />
+            {isLive ? "Live" : "Paused"}
           </Badge>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsLive(!isLive)}
-          >
-            {isLive ? 'Pause' : 'Resume'} Updates
+          <Button variant="outline" size="sm" onClick={() => setIsLive(!isLive)}>
+            {isLive ? "Pause" : "Resume"} Updates
           </Button>
         </div>
       </div>
@@ -205,9 +213,21 @@ export function AdvancedAnalytics() {
                   <XAxis dataKey="hour" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="fraudAttempts" stroke="#EF4444" strokeWidth={2} name="Fraud Attempts" />
+                  <Line
+                    type="monotone"
+                    dataKey="fraudAttempts"
+                    stroke="#EF4444"
+                    strokeWidth={2}
+                    name="Fraud Attempts"
+                  />
                   <Line type="monotone" dataKey="blocked" stroke="#10B981" strokeWidth={2} name="Blocked" />
-                  <Line type="monotone" dataKey="investigated" stroke="#F59E0B" strokeWidth={2} name="Under Investigation" />
+                  <Line
+                    type="monotone"
+                    dataKey="investigated"
+                    stroke="#F59E0B"
+                    strokeWidth={2}
+                    name="Under Investigation"
+                  />
                 </RechartsLineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -261,7 +281,10 @@ export function AdvancedAnalytics() {
             <CardContent>
               <div className="space-y-4">
                 {topFraudPatterns.map((pattern, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                         <span className="text-sm font-bold text-blue-600">{index + 1}</span>
@@ -272,9 +295,9 @@ export function AdvancedAnalytics() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      {pattern.trend === 'up' && <TrendingUp className="h-4 w-4 text-red-500" />}
-                      {pattern.trend === 'down' && <TrendingDown className="h-4 w-4 text-green-500" />}
-                      {pattern.trend === 'stable' && <div className="w-4 h-4 bg-gray-400 rounded-full" />}
+                      {pattern.trend === "up" && <TrendingUp className="h-4 w-4 text-red-500" />}
+                      {pattern.trend === "down" && <TrendingDown className="h-4 w-4 text-green-500" />}
+                      {pattern.trend === "stable" && <div className="w-4 h-4 bg-gray-400 rounded-full" />}
                     </div>
                   </div>
                 ))}

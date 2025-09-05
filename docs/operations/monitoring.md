@@ -9,6 +9,7 @@ FraudGuard 360° implements comprehensive monitoring and observability following
 ## 🎯 **Observability Strategy**
 
 ### **Three Pillars of Observability**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Observability Pillars                │
@@ -28,6 +29,7 @@ FraudGuard 360° implements comprehensive monitoring and observability following
 ```
 
 ### **Monitoring Objectives**
+
 - **System Health**: Real-time health and availability monitoring
 - **Performance**: Response times, throughput, and resource utilization
 - **Business Metrics**: Fraud detection rates, user activity, data processing
@@ -39,6 +41,7 @@ FraudGuard 360° implements comprehensive monitoring and observability following
 ## 📈 **Metrics Collection**
 
 ### **Prometheus Configuration**
+
 ```yaml
 # prometheus.yml
 global:
@@ -49,49 +52,51 @@ rule_files:
   - "alert_rules.yml"
 
 scrape_configs:
-  - job_name: 'fraudguard-app'
+  - job_name: "fraudguard-app"
     static_configs:
-      - targets: ['fraudguard-app:3000']
-    metrics_path: '/api/monitoring/metrics'
+      - targets: ["fraudguard-app:3000"]
+    metrics_path: "/api/monitoring/metrics"
     scrape_interval: 30s
     scrape_timeout: 10s
 
-  - job_name: 'postgres-exporter'
+  - job_name: "postgres-exporter"
     static_configs:
-      - targets: ['postgres-exporter:9187']
+      - targets: ["postgres-exporter:9187"]
 
-  - job_name: 'redis-exporter'
+  - job_name: "redis-exporter"
     static_configs:
-      - targets: ['redis-exporter:9121']
+      - targets: ["redis-exporter:9121"]
 ```
 
 ### **Application Metrics**
+
 ```typescript
 // Custom Metrics Implementation
-import { register, Counter, Histogram, Gauge } from 'prom-client';
+import { register, Counter, Histogram, Gauge } from "prom-client"
 
 // HTTP Request Metrics
 const httpRequestDuration = new Histogram({
-  name: 'http_request_duration_seconds',
-  help: 'Duration of HTTP requests in seconds',
-  labelNames: ['method', 'route', 'status_code'],
-  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10]
-});
+  name: "http_request_duration_seconds",
+  help: "Duration of HTTP requests in seconds",
+  labelNames: ["method", "route", "status_code"],
+  buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10],
+})
 
 // Business Metrics
 const fraudAlertsTotal = new Counter({
-  name: 'fraud_alerts_total',
-  help: 'Total number of fraud alerts generated',
-  labelNames: ['severity', 'type']
-});
+  name: "fraud_alerts_total",
+  help: "Total number of fraud alerts generated",
+  labelNames: ["severity", "type"],
+})
 
 const cdrProcessingRate = new Gauge({
-  name: 'cdr_processing_rate',
-  help: 'CDR records processed per second'
-});
+  name: "cdr_processing_rate",
+  help: "CDR records processed per second",
+})
 ```
 
 **Metric Categories:**
+
 - **Infrastructure**: CPU, memory, disk, network usage
 - **Application**: Response times, error rates, throughput
 - **Business**: Fraud detection rates, user sessions, data volume
@@ -103,6 +108,7 @@ const cdrProcessingRate = new Gauge({
 ## 📊 **Grafana Dashboards**
 
 ### **Dashboard Structure**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Grafana Dashboards                   │
@@ -116,6 +122,7 @@ const cdrProcessingRate = new Gauge({
 ```
 
 ### **Key Dashboard Panels**
+
 ```json
 {
   "dashboard": {
@@ -161,37 +168,39 @@ const cdrProcessingRate = new Gauge({
 ## 📝 **Logging Strategy**
 
 ### **Structured Logging**
+
 ```typescript
 // Winston Logger Configuration
-import winston from 'winston';
+import winston from "winston"
 
 const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL || "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.errors({ stack: true }),
     winston.format.json()
   ),
   defaultMeta: {
-    service: 'fraudguard-360',
-    version: process.env.APP_VERSION || '1.0.0'
+    service: "fraudguard-360",
+    version: process.env.APP_VERSION || "1.0.0",
   },
   transports: [
-    new winston.transports.File({ 
-      filename: 'logs/error.log', 
-      level: 'error' 
+    new winston.transports.File({
+      filename: "logs/error.log",
+      level: "error",
     }),
-    new winston.transports.File({ 
-      filename: 'logs/combined.log' 
+    new winston.transports.File({
+      filename: "logs/combined.log",
     }),
     new winston.transports.Console({
-      format: winston.format.simple()
-    })
-  ]
-});
+      format: winston.format.simple(),
+    }),
+  ],
+})
 ```
 
 ### **Log Categories**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │                Log Categories                      │
@@ -206,20 +215,21 @@ const logger = winston.createLogger({
 ```
 
 ### **Log Format Standards**
+
 ```typescript
 // Standardized Log Entry
 interface LogEntry {
-  timestamp: string;
-  level: 'error' | 'warn' | 'info' | 'debug';
-  message: string;
-  service: string;
-  version: string;
-  userId?: string;
-  requestId?: string;
-  ipAddress?: string;
-  userAgent?: string;
-  duration?: number;
-  metadata?: Record<string, any>;
+  timestamp: string
+  level: "error" | "warn" | "info" | "debug"
+  message: string
+  service: string
+  version: string
+  userId?: string
+  requestId?: string
+  ipAddress?: string
+  userAgent?: string
+  duration?: number
+  metadata?: Record<string, any>
 }
 ```
 
@@ -228,40 +238,42 @@ interface LogEntry {
 ## 🚨 **Alerting System**
 
 ### **Alert Rules Configuration**
+
 ```yaml
 # alert_rules.yml
 groups:
-- name: fraudguard.rules
-  rules:
-  - alert: ApplicationDown
-    expr: up{job="fraudguard-app"} == 0
-    for: 1m
-    labels:
-      severity: critical
-    annotations:
-      summary: "FraudGuard application is down"
-      description: "Application has been down for more than 1 minute"
+  - name: fraudguard.rules
+    rules:
+      - alert: ApplicationDown
+        expr: up{job="fraudguard-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "FraudGuard application is down"
+          description: "Application has been down for more than 1 minute"
 
-  - alert: HighErrorRate
-    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.1
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "High error rate detected"
-      description: "Error rate is {{ $value }} errors per second"
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors per second"
 
-  - alert: HighResponseTime
-    expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "High response time detected"
-      description: "95th percentile response time is {{ $value }} seconds"
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }} seconds"
 ```
 
 ### **Alert Severity Levels**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Alert Severity Matrix                 │
@@ -281,31 +293,32 @@ groups:
 ```
 
 ### **Notification Channels**
+
 ```yaml
 # AlertManager Configuration
 route:
-  group_by: ['alertname']
+  group_by: ["alertname"]
   group_wait: 10s
   group_interval: 10s
   repeat_interval: 1h
-  receiver: 'web.hook'
+  receiver: "web.hook"
 
 receivers:
-- name: 'web.hook'
-  email_configs:
-  - to: 'ops-team@fraudguard.com'
-    subject: 'FraudGuard Alert: {{ .GroupLabels.alertname }}'
-    body: |
-      {{ range .Alerts }}
-      Alert: {{ .Annotations.summary }}
-      Description: {{ .Annotations.description }}
-      {{ end }}
-  
-  slack_configs:
-  - api_url: 'YOUR_SLACK_WEBHOOK_URL'
-    channel: '#alerts'
-    title: 'FraudGuard Alert'
-    text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+  - name: "web.hook"
+    email_configs:
+      - to: "ops-team@fraudguard.com"
+        subject: "FraudGuard Alert: {{ .GroupLabels.alertname }}"
+        body: |
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          {{ end }}
+
+    slack_configs:
+      - api_url: "YOUR_SLACK_WEBHOOK_URL"
+        channel: "#alerts"
+        title: "FraudGuard Alert"
+        text: "{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}"
 ```
 
 ---
@@ -313,35 +326,36 @@ receivers:
 ## 🔍 **Health Checks**
 
 ### **Application Health Endpoint**
+
 ```typescript
 // /api/health/route.ts
 export async function GET() {
   const healthCheck = {
     timestamp: new Date().toISOString(),
-    overall_status: 'healthy',
+    overall_status: "healthy",
     services: {
       application: await checkApplicationHealth(),
       database: await checkDatabaseHealth(),
       cache: await checkCacheHealth(),
-      external_apis: await checkExternalAPIs()
+      external_apis: await checkExternalAPIs(),
     },
     environment: {
       node_env: process.env.NODE_ENV,
       enable_real_data: process.env.ENABLE_REAL_DATA,
-      enable_cache: process.env.ENABLE_REDIS_CACHE
-    }
-  };
+      enable_cache: process.env.ENABLE_REDIS_CACHE,
+    },
+  }
 
-  const overallHealthy = Object.values(healthCheck.services)
-    .every(service => service.status === 'healthy');
+  const overallHealthy = Object.values(healthCheck.services).every((service) => service.status === "healthy")
 
   return Response.json(healthCheck, {
-    status: overallHealthy ? 200 : 503
-  });
+    status: overallHealthy ? 200 : 503,
+  })
 }
 ```
 
 ### **Kubernetes Health Probes**
+
 ```yaml
 # Kubernetes Deployment Health Checks
 livenessProbe:
@@ -368,28 +382,29 @@ readinessProbe:
 ## 📊 **Business Metrics**
 
 ### **Key Performance Indicators (KPIs)**
+
 ```typescript
 // Business Metrics Collection
 interface BusinessMetrics {
   // Fraud Detection Metrics
-  fraudAlertsGenerated: number;
-  falsePositiveRate: number;
-  detectionAccuracy: number;
-  
+  fraudAlertsGenerated: number
+  falsePositiveRate: number
+  detectionAccuracy: number
+
   // User Engagement
-  activeUsers: number;
-  sessionDuration: number;
-  featureUsage: Record<string, number>;
-  
+  activeUsers: number
+  sessionDuration: number
+  featureUsage: Record<string, number>
+
   // Data Processing
-  cdrRecordsProcessed: number;
-  processingLatency: number;
-  errorRate: number;
-  
+  cdrRecordsProcessed: number
+  processingLatency: number
+  errorRate: number
+
   // System Performance
-  apiResponseTime: number;
-  systemAvailability: number;
-  resourceUtilization: number;
+  apiResponseTime: number
+  systemAvailability: number
+  resourceUtilization: number
 }
 ```
 

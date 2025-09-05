@@ -1,20 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { withSecurity } from '@/lib/security'
-import { getPerformanceSummary, getPerformanceHealth } from '@/lib/performance'
-import { logRequest, logResponse, createTimer } from '@/lib/logger'
+import { NextRequest, NextResponse } from "next/server"
+import { withSecurity } from "@/lib/security"
+import { getPerformanceSummary, getPerformanceHealth } from "@/lib/performance"
+import { logRequest, logResponse, createTimer } from "@/lib/logger"
 
 async function performanceHandler(request: NextRequest) {
   const timer = createTimer()
-  const requestData = logRequest(request, { operation: 'get_performance_metrics' })
+  const requestData = logRequest(request, { operation: "get_performance_metrics" })
 
   try {
     const { searchParams } = new URL(request.url)
-    const includeHealth = searchParams.get('health') === 'true'
-    const includeDetails = searchParams.get('details') === 'true'
+    const includeHealth = searchParams.get("health") === "true"
+    const includeDetails = searchParams.get("details") === "true"
 
     let response: any = {
       timestamp: new Date().toISOString(),
-      monitoring_enabled: process.env.ENABLE_PERFORMANCE_MONITORING !== 'false',
+      monitoring_enabled: process.env.ENABLE_PERFORMANCE_MONITORING !== "false",
     }
 
     if (includeDetails) {
@@ -44,16 +44,15 @@ async function performanceHandler(request: NextRequest) {
       success: true,
       data: response,
     })
-
   } catch (error) {
     const duration = timer.end()
-    logResponse(requestData, 500, duration, { error: 'performance_metrics_failed' })
+    logResponse(requestData, 500, duration, { error: "performance_metrics_failed" })
 
     return NextResponse.json(
       {
         success: false,
-        error: 'Failed to retrieve performance metrics',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: "Failed to retrieve performance metrics",
+        details: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 500 }
     )

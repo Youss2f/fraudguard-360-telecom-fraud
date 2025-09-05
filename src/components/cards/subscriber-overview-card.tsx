@@ -5,7 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { User, Phone, Smartphone, MapPin, Calendar, Activity, ChevronDown, ChevronUp, AlertTriangle, CheckCircle, Clock } from 'lucide-react'
+import {
+  User,
+  Phone,
+  Smartphone,
+  MapPin,
+  Calendar,
+  Activity,
+  ChevronDown,
+  ChevronUp,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+} from "lucide-react"
 import { SubscriberOverview } from "@/types/subscriber"
 
 interface SubscriberOverviewCardProps {
@@ -56,17 +68,13 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
               {getStatusIcon(data.status)}
               {data.status}
             </Badge>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
               {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-6">
         {/* Primary Information */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -77,7 +85,7 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
             </div>
             <div className="font-mono text-lg font-semibold">{data.msisdn}</div>
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Smartphone className="h-4 w-4" />
@@ -85,15 +93,17 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
             </div>
             <div className="font-mono text-lg font-semibold">{data.imsi}</div>
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Smartphone className="h-4 w-4" />
               Current IMEI
             </div>
-            <div 
+            <div
               className={`font-mono text-lg font-semibold cursor-pointer transition-colors ${
-                highlightedImei === data.currentImei ? 'text-blue-600 bg-blue-50 px-2 py-1 rounded' : 'hover:text-blue-600'
+                highlightedImei === data.currentImei
+                  ? "text-blue-600 bg-blue-50 px-2 py-1 rounded"
+                  : "hover:text-blue-600"
               }`}
               onClick={() => onImeiHighlight(highlightedImei === data.currentImei ? null : data.currentImei)}
             >
@@ -118,15 +128,13 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Activity className="h-4 w-4" />
               Last Activity
             </div>
-            <div className="font-semibold">
-              {new Date(data.lastActivity).toLocaleString()}
-            </div>
+            <div className="font-semibold">{new Date(data.lastActivity).toLocaleString()}</div>
           </div>
         </div>
 
@@ -147,7 +155,7 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
         {isExpanded && (
           <>
             <Separator />
-            
+
             {/* Expanded Information */}
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -156,11 +164,9 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
                     <Calendar className="h-4 w-4" />
                     Activation Date
                   </div>
-                  <div className="font-semibold">
-                    {new Date(data.activationDate).toLocaleDateString()}
-                  </div>
+                  <div className="font-semibold">{new Date(data.activationDate).toLocaleDateString()}</div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="text-sm text-gray-500">Subscription Type</div>
                   <Badge variant="outline">{data.subscriptionType}</Badge>
@@ -176,7 +182,7 @@ export function SubscriberOverviewCard({ data, onImeiHighlight, highlightedImei 
                       key={imei}
                       variant={imei === data.currentImei ? "default" : "secondary"}
                       className={`font-mono cursor-pointer transition-colors ${
-                        highlightedImei === imei ? 'ring-2 ring-blue-500' : ''
+                        highlightedImei === imei ? "ring-2 ring-blue-500" : ""
                       }`}
                       onClick={() => onImeiHighlight(highlightedImei === imei ? null : imei)}
                     >

@@ -1,15 +1,20 @@
 "use client"
 
 import { useState } from "react"
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 const eventTypes = [
-  "Voice Calls", "SMS", "Data Sessions", "International Calls", 
-  "Roaming", "Recharges", "Device Changes"
+  "Voice Calls",
+  "SMS",
+  "Data Sessions",
+  "International Calls",
+  "Roaming",
+  "Recharges",
+  "Device Changes",
 ]
 
 interface EventTypeFilterProps {
@@ -22,7 +27,7 @@ export function EventTypeFilter({ selectedEventTypes, onEventTypeChange }: Event
 
   const handleSelect = (eventType: string) => {
     const newEventTypes = selectedEventTypes.includes(eventType)
-      ? selectedEventTypes.filter(e => e !== eventType)
+      ? selectedEventTypes.filter((e) => e !== eventType)
       : [...selectedEventTypes, eventType]
     onEventTypeChange(newEventTypes)
   }
@@ -30,16 +35,8 @@ export function EventTypeFilter({ selectedEventTypes, onEventTypeChange }: Event
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {selectedEventTypes.length === 0 
-            ? "Select event types..." 
-            : `${selectedEventTypes.length} selected`
-          }
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
+          {selectedEventTypes.length === 0 ? "Select event types..." : `${selectedEventTypes.length} selected`}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -49,15 +46,9 @@ export function EventTypeFilter({ selectedEventTypes, onEventTypeChange }: Event
           <CommandEmpty>No event type found.</CommandEmpty>
           <CommandGroup>
             {eventTypes.map((eventType) => (
-              <CommandItem
-                key={eventType}
-                onSelect={() => handleSelect(eventType)}
-              >
+              <CommandItem key={eventType} onSelect={() => handleSelect(eventType)}>
                 <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    selectedEventTypes.includes(eventType) ? "opacity-100" : "opacity-0"
-                  )}
+                  className={cn("mr-2 h-4 w-4", selectedEventTypes.includes(eventType) ? "opacity-100" : "opacity-0")}
                 />
                 {eventType}
               </CommandItem>

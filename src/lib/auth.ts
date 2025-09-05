@@ -1,43 +1,43 @@
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
-import { prisma, shouldUseRealData } from './database'
-import type { User } from '@prisma/client'
+import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
+import { prisma, shouldUseRealData } from "./database"
+import type { User } from "@prisma/client"
 
 // JWT configuration
-const JWT_SECRET = process.env.NEXTAUTH_SECRET || 'fallback-secret-key'
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h'
+const JWT_SECRET = process.env.NEXTAUTH_SECRET || "fallback-secret-key"
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "24h"
 
 // Mock users for demo mode (keeping existing functionality)
 const mockUsers = [
   {
-    id: '1',
-    username: 'fraud.analyst',
-    email: 'analyst@fraudguard.com',
-    password: 'demo123',
-    role: 'ANALYST' as const,
-    permissions: ['view_dashboard', 'export_reports', 'manage_cases']
+    id: "1",
+    username: "fraud.analyst",
+    email: "analyst@fraudguard.com",
+    password: "demo123",
+    role: "ANALYST" as const,
+    permissions: ["view_dashboard", "export_reports", "manage_cases"],
   },
   {
-    id: '2',
-    username: 'admin',
-    email: 'admin@fraudguard.com',
-    password: 'admin123',
-    role: 'ADMIN' as const,
-    permissions: ['view_dashboard', 'export_reports', 'manage_cases', 'admin_panel']
+    id: "2",
+    username: "admin",
+    email: "admin@fraudguard.com",
+    password: "admin123",
+    role: "ADMIN" as const,
+    permissions: ["view_dashboard", "export_reports", "manage_cases", "admin_panel"],
   },
   {
-    id: '3',
-    username: 'demo',
-    email: 'demo@fraudguard.com',
-    password: 'demo',
-    role: 'DEMO' as const,
-    permissions: ['view_dashboard']
-  }
+    id: "3",
+    username: "demo",
+    email: "demo@fraudguard.com",
+    password: "demo",
+    role: "DEMO" as const,
+    permissions: ["view_dashboard"],
+  },
 ]
 
 // Hash password
 export async function hashPassword(password: string): Promise<string> {
-  const rounds = parseInt(process.env.BCRYPT_ROUNDS || '12')
+  const rounds = parseInt(process.env.BCRYPT_ROUNDS || "12")
   return bcrypt.hash(password, rounds)
 }
 
@@ -48,7 +48,7 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 
 // Generate JWT token
 export function generateToken(payload: any): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN })
+  return jwt.sign(payload, JWT_SECRET || "fallback-secret", { expiresIn: "24h" })
 }
 
 // Verify JWT token
@@ -56,7 +56,7 @@ export function verifyToken(token: string): any {
   try {
     return jwt.verify(token, JWT_SECRET)
   } catch (error) {
-    throw new Error('Invalid or expired token')
+    throw new Error("Invalid or expired token")
   }
 }
 
@@ -64,9 +64,9 @@ export function verifyToken(token: string): any {
 export async function authenticateUser(username: string, password: string) {
   if (!shouldUseRealData()) {
     // Use mock authentication for demo
-    const user = mockUsers.find(u => u.username === username && u.password === password)
+    const user = mockUsers.find((u) => u.username === username && u.password === password)
     if (!user) {
-      throw new Error('Invalid credentials')
+      throw new Error("Invalid credentials")
     }
 
     const token = generateToken({
@@ -85,7 +85,7 @@ export async function authenticateUser(username: string, password: string) {
         permissions: user.permissions,
       },
       token,
-      source: 'mock_auth'
+      source: "mock_auth",
     }
   }
 
@@ -105,12 +105,12 @@ export async function authenticateUser(username: string, password: string) {
     })
 
     if (!user || !user.isActive) {
-      throw new Error('Invalid credentials')
+      throw new Error("Invalid credentials")
     }
 
     const isValidPassword = await verifyPassword(password, user.password)
     if (!isValidPassword) {
-      throw new Error('Invalid credentials')
+      throw new Error("Invalid credentials")
     }
 
     // Update last login
@@ -144,15 +144,15 @@ export async function authenticateUser(username: string, password: string) {
         permissions: user.permissions,
       },
       token,
-      source: 'database_auth'
+      source: "database_auth",
     }
   } catch (error) {
-    console.error('Database authentication failed, falling back to mock:', error)
-    
+    console.error("Database authentication failed, falling back to mock:", error)
+
     // Fallback to mock authentication
-    const user = mockUsers.find(u => u.username === username && u.password === password)
+    const user = mockUsers.find((u) => u.username === username && u.password === password)
     if (!user) {
-      throw new Error('Invalid credentials')
+      throw new Error("Invalid credentials")
     }
 
     const token = generateToken({
@@ -171,7 +171,7 @@ export async function authenticateUser(username: string, password: string) {
         permissions: user.permissions,
       },
       token,
-      source: 'mock_fallback'
+      source: "mock_fallback",
     }
   }
 }
@@ -180,7 +180,7 @@ export async function authenticateUser(username: string, password: string) {
 export async function validateSession(token: string) {
   try {
     const decoded = verifyToken(token)
-    
+
     if (!shouldUseRealData()) {
       // Mock validation
       return {
@@ -191,7 +191,7 @@ export async function validateSession(token: string) {
           permissions: decoded.permissions,
         },
         valid: true,
-        source: 'mock_validation'
+        source: "mock_validation",
       }
     }
 
@@ -202,7 +202,7 @@ export async function validateSession(token: string) {
     })
 
     if (!session || session.expiresAt < new Date()) {
-      throw new Error('Session expired')
+      throw new Error("Session expired")
     }
 
     return {
@@ -213,13 +213,13 @@ export async function validateSession(token: string) {
         permissions: session.user.permissions,
       },
       valid: true,
-      source: 'database_validation'
+      source: "database_validation",
     }
   } catch (error) {
     return {
       user: null,
       valid: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : "Unknown error",
     }
   }
 }
@@ -228,7 +228,7 @@ export async function validateSession(token: string) {
 export async function logoutUser(token: string) {
   if (!shouldUseRealData()) {
     // Mock logout - just return success
-    return { success: true, source: 'mock_logout' }
+    return { success: true, source: "mock_logout" }
   }
 
   try {
@@ -236,23 +236,25 @@ export async function logoutUser(token: string) {
     await prisma.session.delete({
       where: { token },
     })
-    return { success: true, source: 'database_logout' }
+    return { success: true, source: "database_logout" }
   } catch (error) {
-    console.error('Database logout failed:', error)
-    return { success: true, source: 'mock_fallback' } // Still return success
+    console.error("Database logout failed:", error)
+    return { success: true, source: "mock_fallback" } // Still return success
   }
 }
 
 // Get demo credentials (for UI)
 export function getDemoCredentials() {
-  return mockUsers.map(user => ({
+  return mockUsers.map((user) => ({
     username: user.username,
     password: user.password,
-    role: user.role === 'ANALYST' ? 'Fraud Analyst' : 
-          user.role === 'ADMIN' ? 'Administrator' : 'Demo User',
-    description: user.role === 'ANALYST' ? 'Full access to fraud detection features' :
-                user.role === 'ADMIN' ? 'Complete system access with admin privileges' :
-                'Limited access for demonstration purposes'
+    role: user.role === "ANALYST" ? "Fraud Analyst" : user.role === "ADMIN" ? "Administrator" : "Demo User",
+    description:
+      user.role === "ANALYST"
+        ? "Full access to fraud detection features"
+        : user.role === "ADMIN"
+          ? "Complete system access with admin privileges"
+          : "Limited access for demonstration purposes",
   }))
 }
 
@@ -266,7 +268,7 @@ export async function logUserAction(
   userAgent?: string
 ) {
   if (!shouldUseRealData()) {
-    console.log('Mock audit log:', { userId, action, resource, details })
+    // Mock audit log entry
     return
   }
 
@@ -282,6 +284,6 @@ export async function logUserAction(
       },
     })
   } catch (error) {
-    console.error('Failed to log user action:', error)
+    console.error("Failed to log user action:", error)
   }
 }

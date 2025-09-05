@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { 
-  Play, 
-  ArrowRight, 
-  ArrowLeft, 
-  X, 
-  Lightbulb, 
-  Target, 
+import {
+  Play,
+  ArrowRight,
+  ArrowLeft,
+  X,
+  Lightbulb,
+  Target,
   MousePointer,
   Eye,
   Download,
   Map,
-  Shield
+  Shield,
 } from "lucide-react"
 
 interface TourStep {
@@ -33,66 +33,74 @@ const tourSteps: TourStep[] = [
   {
     id: "welcome",
     title: "Welcome to FraudGuard 360°",
-    description: "This interactive demo showcases a comprehensive telecom fraud detection platform. Let's explore the key features that make this an impressive technical showcase.",
+    description:
+      "This interactive demo showcases a comprehensive telecom fraud detection platform. Let's explore the key features that make this an impressive technical showcase.",
     icon: <Shield className="h-5 w-5" />,
-    highlight: true
+    highlight: true,
   },
   {
     id: "search",
     title: "Subscriber Search",
-    description: "Start by searching for a subscriber using MSISDN (+1234567890) or IMSI. The platform supports both telecom identifier types for comprehensive analysis.",
+    description:
+      "Start by searching for a subscriber using MSISDN (+1234567890) or IMSI. The platform supports both telecom identifier types for comprehensive analysis.",
     target: "search-input",
     icon: <Target className="h-5 w-5" />,
-    action: "Try entering: +1234567890"
+    action: "Try entering: +1234567890",
   },
   {
     id: "ai-analysis",
     title: "AI-Powered Fraud Scoring",
-    description: "Watch the real-time AI analysis in action. Multiple machine learning models analyze behavioral, network, device, and velocity patterns to generate risk scores.",
+    description:
+      "Watch the real-time AI analysis in action. Multiple machine learning models analyze behavioral, network, device, and velocity patterns to generate risk scores.",
     target: "ai-card",
     icon: <Lightbulb className="h-5 w-5" />,
-    action: "Observe the progress indicators and confidence scores"
+    action: "Observe the progress indicators and confidence scores",
   },
   {
     id: "imei-highlighting",
     title: "Cross-Reference IMEI Tracking",
-    description: "Click any IMEI number to see it highlighted across all dashboard cards. This demonstrates device correlation and tracking capabilities.",
+    description:
+      "Click any IMEI number to see it highlighted across all dashboard cards. This demonstrates device correlation and tracking capabilities.",
     target: "imei-highlight",
     icon: <MousePointer className="h-5 w-5" />,
-    action: "Click any IMEI number to see the highlighting effect"
+    action: "Click any IMEI number to see the highlighting effect",
   },
   {
     id: "interactive-charts",
     title: "Advanced Data Visualization",
-    description: "Explore interactive charts showing time-series data, call patterns, and fraud indicators. Hover over data points for detailed insights.",
+    description:
+      "Explore interactive charts showing time-series data, call patterns, and fraud indicators. Hover over data points for detailed insights.",
     target: "charts",
     icon: <Eye className="h-5 w-5" />,
-    action: "Hover over chart elements and expand card details"
+    action: "Hover over chart elements and expand card details",
   },
   {
     id: "filtering",
     title: "Smart Filtering System",
-    description: "Use advanced filters to narrow down data by date ranges, locations, and event types. All visualizations update in real-time.",
+    description:
+      "Use advanced filters to narrow down data by date ranges, locations, and event types. All visualizations update in real-time.",
     target: "filters",
     icon: <Target className="h-5 w-5" />,
-    action: "Try different date ranges and filter combinations"
+    action: "Try different date ranges and filter combinations",
   },
   {
     id: "export",
     title: "Professional Export Features",
-    description: "Generate professional PDF reports or CSV exports with custom section selection. Perfect for sharing analysis results.",
+    description:
+      "Generate professional PDF reports or CSV exports with custom section selection. Perfect for sharing analysis results.",
     target: "export-button",
     icon: <Download className="h-5 w-5" />,
-    action: "Click Export to see the professional report options"
+    action: "Click Export to see the professional report options",
   },
   {
     id: "realtime",
     title: "Real-Time Monitoring",
-    description: "Switch to the monitoring tab to see live fraud detection simulation with real-time alerts and pattern recognition.",
+    description:
+      "Switch to the monitoring tab to see live fraud detection simulation with real-time alerts and pattern recognition.",
     target: "monitoring-tab",
     icon: <Map className="h-5 w-5" />,
-    action: "Navigate to the Real-Time Monitoring tab"
-  }
+    action: "Navigate to the Real-Time Monitoring tab",
+  },
 ]
 
 interface DemoTourProps {
@@ -133,11 +141,11 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
     if (isOpen && currentTourStep.target) {
       const element = document.querySelector(`[data-tour="${currentTourStep.target}"]`)
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        element.classList.add('tour-highlight')
-        
+        element.scrollIntoView({ behavior: "smooth", block: "center" })
+        element.classList.add("tour-highlight")
+
         return () => {
-          element.classList.remove('tour-highlight')
+          element.classList.remove("tour-highlight")
         }
       }
     }
@@ -149,7 +157,7 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
     <>
       {/* Tour Overlay */}
       <div className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm" />
-      
+
       {/* Tour Dialog */}
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-md z-[60]">
@@ -164,12 +172,12 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
               </Button>
             </div>
           </DialogHeader>
-          
+
           <div className="space-y-4">
             {/* Progress Indicator */}
             <div className="flex items-center gap-2">
               <div className="flex-1 bg-gray-200 rounded-full h-2">
-                <div 
+                <div
                   className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
                 />
@@ -188,10 +196,8 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-gray-600 leading-relaxed">
-                  {currentTourStep.description}
-                </p>
-                
+                <p className="text-gray-600 leading-relaxed">{currentTourStep.description}</p>
+
                 {currentTourStep.action && (
                   <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
                     <Lightbulb className="h-3 w-3 mr-1" />
@@ -203,8 +209,8 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
 
             {/* Navigation Buttons */}
             <div className="flex items-center justify-between pt-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 0}
                 className="flex items-center gap-2"
@@ -217,11 +223,8 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
                 <Button variant="ghost" onClick={skipTour}>
                   Skip Tour
                 </Button>
-                <Button 
-                  onClick={nextStep}
-                  className="flex items-center gap-2"
-                >
-                  {currentStep === tourSteps.length - 1 ? 'Finish' : 'Next'}
+                <Button onClick={nextStep} className="flex items-center gap-2">
+                  {currentStep === tourSteps.length - 1 ? "Finish" : "Next"}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -235,7 +238,9 @@ export function DemoTour({ isOpen, onClose }: DemoTourProps) {
         .tour-highlight {
           position: relative;
           z-index: 55;
-          box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+          box-shadow:
+            0 0 0 4px rgba(59, 130, 246, 0.5),
+            0 0 20px rgba(59, 130, 246, 0.3);
           border-radius: 8px;
           transition: all 0.3s ease;
         }
@@ -258,7 +263,7 @@ export function TourTrigger() {
         <Play className="h-4 w-4 mr-2" />
         Start Demo Tour
       </Button>
-      
+
       <DemoTour isOpen={showTour} onClose={() => setShowTour(false)} />
     </>
   )

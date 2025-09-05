@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
-import { withSecurity } from '@/lib/security'
-import { performHealthCheck } from '@/lib/init'
-import { createTimer } from '@/lib/logger'
+import { NextResponse } from "next/server"
+import { withSecurity } from "@/lib/security"
+import { performHealthCheck } from "@/lib/init"
+import { createTimer } from "@/lib/logger"
 
 async function healthHandler() {
   const timer = createTimer()
@@ -20,11 +20,11 @@ async function healthHandler() {
 
     return NextResponse.json(
       {
-        status: 'unhealthy',
+        status: "unhealthy",
         timestamp: new Date().toISOString(),
-        error: 'Health check failed',
-        details: error instanceof Error ? error.message : 'Unknown error',
-        response_time_ms: duration
+        error: "Health check failed",
+        details: error instanceof Error ? error.message : "Unknown error",
+        response_time_ms: duration,
       },
       { status: 500 }
     )

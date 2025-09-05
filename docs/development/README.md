@@ -9,6 +9,7 @@ This guide provides comprehensive information for developers working on FraudGua
 ## 🚀 **Quick Start for Developers**
 
 ### **Prerequisites**
+
 ```bash
 # Required software
 Node.js 18+ (LTS recommended)
@@ -20,6 +21,7 @@ Docker & Docker Compose (for containerized development)
 ```
 
 ### **Development Setup**
+
 ```bash
 # 1. Fork and clone the repository
 git clone https://github.com/your-username/fraudguard-360.git
@@ -46,6 +48,7 @@ npm run dev
 ## 📁 **Project Structure**
 
 ### **Directory Organization**
+
 ```
 fraudguard-360/
 ├── 📱 app/                    # Next.js App Router
@@ -75,6 +78,7 @@ fraudguard-360/
 ```
 
 ### **Key Files**
+
 ```
 📄 Configuration Files
 ├── package.json              # Dependencies and scripts
@@ -92,6 +96,7 @@ fraudguard-360/
 ## 🔧 **Development Workflow**
 
 ### **Git Workflow**
+
 ```bash
 # 1. Create feature branch
 git checkout -b feature/your-feature-name
@@ -108,6 +113,7 @@ git push origin feature/your-feature-name
 ```
 
 ### **Commit Message Convention**
+
 We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
@@ -119,6 +125,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -128,6 +135,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `chore`: Maintenance tasks
 
 **Examples:**
+
 ```bash
 feat(fraud-detection): add velocity fraud algorithm
 fix(api): resolve authentication token validation
@@ -140,6 +148,7 @@ test(components): add unit tests for dashboard
 ## 📜 **Available Scripts**
 
 ### **Development Scripts**
+
 ```bash
 npm run dev              # Start development server
 npm run build            # Build for production
@@ -148,6 +157,7 @@ npm run setup            # Interactive setup wizard
 ```
 
 ### **Database Scripts (Production Mode)**
+
 ```bash
 npm run db:generate      # Generate Prisma client
 npm run db:push          # Push schema to database
@@ -158,6 +168,7 @@ npm run db:reset         # Reset database (development only)
 ```
 
 ### **Code Quality Scripts**
+
 ```bash
 npm run lint             # Check code quality
 npm run lint:fix         # Fix linting issues
@@ -168,6 +179,7 @@ npm run quality          # Run all quality checks
 ```
 
 ### **Testing Scripts**
+
 ```bash
 npm run test             # Run tests
 npm run test:watch       # Run tests in watch mode
@@ -182,12 +194,13 @@ npm run test:e2e         # Run end-to-end tests
 ## 📋 **Code Standards**
 
 ### **TypeScript Guidelines**
+
 ```typescript
 // Use strict typing
 interface FraudAnalysis {
-  riskScore: number;
-  confidence: number;
-  alerts: FraudAlert[];
+  riskScore: number
+  confidence: number
+  alerts: FraudAlert[]
 }
 
 // Prefer explicit return types
@@ -198,10 +211,11 @@ function detectFraud(data: SubscriberData): Promise<FraudAnalysis> {
 // Use meaningful names
 const calculateRiskScore = (subscriber: Subscriber): number => {
   // Implementation
-};
+}
 ```
 
 ### **React Component Guidelines**
+
 ```typescript
 // Use functional components with TypeScript
 interface DashboardProps {
@@ -209,17 +223,17 @@ interface DashboardProps {
   onAlertClick?: (alert: FraudAlert) => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ 
-  subscriberId, 
-  onAlertClick 
+export const Dashboard: React.FC<DashboardProps> = ({
+  subscriberId,
+  onAlertClick
 }) => {
   // Use hooks appropriately
   const { data, loading, error } = useApi(`/api/subscribers/${subscriberId}`);
-  
+
   // Handle loading and error states
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage error={error} />;
-  
+
   return (
     <div className="dashboard">
       {/* Component JSX */}
@@ -229,44 +243,48 @@ export const Dashboard: React.FC<DashboardProps> = ({
 ```
 
 ### **API Route Guidelines**
+
 ```typescript
 // app/api/example/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { withAuth } from '@/lib/auth';
-import { withSecurity } from '@/lib/security';
+import { NextRequest, NextResponse } from "next/server"
+import { z } from "zod"
+import { withAuth } from "@/lib/auth"
+import { withSecurity } from "@/lib/security"
 
 const requestSchema = z.object({
   id: z.string().min(1),
-  type: z.enum(['msisdn', 'imsi'])
-});
+  type: z.enum(["msisdn", "imsi"]),
+})
 
 export async function GET(request: NextRequest) {
   try {
     // Validate input
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(request.url)
     const params = requestSchema.parse({
-      id: searchParams.get('id'),
-      type: searchParams.get('type')
-    });
-    
+      id: searchParams.get("id"),
+      type: searchParams.get("type"),
+    })
+
     // Business logic
-    const result = await processRequest(params);
-    
+    const result = await processRequest(params)
+
     return NextResponse.json({
       success: true,
-      data: result
-    });
+      data: result,
+    })
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error: error.message
-    }, { status: 400 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: error.message,
+      },
+      { status: 400 }
+    )
   }
 }
 
 // Apply middleware
-export const GET_PROTECTED = withAuth(withSecurity(GET));
+export const GET_PROTECTED = withAuth(withSecurity(GET))
 ```
 
 ---
@@ -274,6 +292,7 @@ export const GET_PROTECTED = withAuth(withSecurity(GET));
 ## 🧪 **Testing Guidelines**
 
 ### **Testing Strategy**
+
 ```
 ┌─────────────────────────────────────────────────────┐
 │              Testing Pyramid                       │
@@ -290,32 +309,34 @@ export const GET_PROTECTED = withAuth(withSecurity(GET));
 ```
 
 ### **Unit Test Example**
+
 ```typescript
 // __tests__/lib/fraud-detection.test.ts
-import { FraudDetectionEngine } from '@/lib/fraud-detection';
-import { mockSubscriberData } from '@/lib/mock-data';
+import { FraudDetectionEngine } from "@/lib/fraud-detection"
+import { mockSubscriberData } from "@/lib/mock-data"
 
-describe('FraudDetectionEngine', () => {
-  let fraudEngine: FraudDetectionEngine;
+describe("FraudDetectionEngine", () => {
+  let fraudEngine: FraudDetectionEngine
 
   beforeEach(() => {
-    fraudEngine = new FraudDetectionEngine();
-  });
+    fraudEngine = new FraudDetectionEngine()
+  })
 
-  describe('velocity fraud detection', () => {
-    it('should detect high call volume fraud', async () => {
-      const subscriber = mockSubscriberData.highRiskSubscriber;
-      const result = await fraudEngine.detectVelocityFraud(subscriber);
+  describe("velocity fraud detection", () => {
+    it("should detect high call volume fraud", async () => {
+      const subscriber = mockSubscriberData.highRiskSubscriber
+      const result = await fraudEngine.detectVelocityFraud(subscriber)
 
-      expect(result.isDetected).toBe(true);
-      expect(result.riskScore).toBeGreaterThan(70);
-      expect(result.confidence).toBeGreaterThan(0.8);
-    });
-  });
-});
+      expect(result.isDetected).toBe(true)
+      expect(result.riskScore).toBeGreaterThan(70)
+      expect(result.confidence).toBeGreaterThan(0.8)
+    })
+  })
+})
 ```
 
 ### **Component Test Example**
+
 ```typescript
 // __tests__/components/subscriber-dashboard.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
@@ -325,7 +346,7 @@ import { SubscriberDashboard } from '@/components/subscriber-dashboard';
 describe('SubscriberDashboard', () => {
   it('renders subscriber information correctly', () => {
     render(<SubscriberDashboard subscriberId="+1234567890" />);
-    
+
     expect(screen.getByText('+1234567890')).toBeInTheDocument();
     expect(screen.getByText('Risk Score')).toBeInTheDocument();
   });
@@ -337,6 +358,7 @@ describe('SubscriberDashboard', () => {
 ## 🔒 **Security Guidelines**
 
 ### **Security Checklist**
+
 - [ ] Validate all inputs with Zod schemas
 - [ ] Use parameterized queries (Prisma ORM)
 - [ ] Implement proper authentication/authorization
@@ -347,18 +369,19 @@ describe('SubscriberDashboard', () => {
 - [ ] Security testing for new features
 
 ### **Sensitive Data Handling**
+
 ```typescript
 // ❌ Don't log sensitive data
-logger.info('User login', { password: user.password }); // BAD
+logger.info("User login", { password: user.password }) // BAD
 
 // ✅ Mask sensitive data
-logger.info('User login', { 
+logger.info("User login", {
   userId: user.id,
-  username: maskSensitiveData(user.username)
-}); // GOOD
+  username: maskSensitiveData(user.username),
+}) // GOOD
 
 // ✅ Use encryption for sensitive fields
-const encryptedData = await encrypt(sensitiveData);
+const encryptedData = await encrypt(sensitiveData)
 ```
 
 ---
@@ -366,6 +389,7 @@ const encryptedData = await encrypt(sensitiveData);
 ## 📊 **Performance Guidelines**
 
 ### **Performance Best Practices**
+
 - Use React.memo for expensive components
 - Implement proper caching strategies
 - Optimize database queries
@@ -373,18 +397,19 @@ const encryptedData = await encrypt(sensitiveData);
 - Monitor bundle size and performance metrics
 
 ### **Database Guidelines**
+
 ```typescript
 // ✅ Efficient queries
 const subscribers = await prisma.subscriber.findMany({
   select: {
     id: true,
     msisdn: true,
-    riskScore: true
+    riskScore: true,
     // Only select needed fields
   },
   where: { riskScore: { gte: 70 } },
-  take: 100
-});
+  take: 100,
+})
 
 // ❌ Avoid N+1 queries
 // Use include or select with relations
@@ -395,6 +420,7 @@ const subscribers = await prisma.subscriber.findMany({
 ## 🐛 **Debugging**
 
 ### **Development Tools**
+
 ```bash
 # Enable debug mode
 DEBUG=fraudguard:* npm run dev
@@ -412,6 +438,7 @@ npm run build:analyze
 ### **Common Issues**
 
 #### **Database Connection Issues**
+
 ```bash
 # Check database status
 npm run db:status
@@ -424,6 +451,7 @@ psql $DATABASE_URL -c "SELECT 1;"
 ```
 
 #### **Build Issues**
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -441,6 +469,7 @@ npm run type-check
 ## 📚 **Learning Resources**
 
 ### **Framework Documentation**
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [React Documentation](https://react.dev)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs)
@@ -448,6 +477,7 @@ npm run type-check
 - [Tailwind CSS](https://tailwindcss.com/docs)
 
 ### **Internal Documentation**
+
 - [Architecture Guide](../technical/architecture.md)
 - [API Documentation](../api/README.md)
 - [Security Guide](../security/README.md)
@@ -458,12 +488,14 @@ npm run type-check
 ## 🤝 **Getting Help**
 
 ### **Communication Channels**
+
 - **GitHub Issues**: Bug reports and feature requests
 - **GitHub Discussions**: General questions and discussions
 - **Email**: dev-team@fraudguard.com
 - **Slack**: #fraudguard-dev (internal)
 
 ### **Code Review Process**
+
 1. Create feature branch
 2. Implement changes with tests
 3. Run quality checks locally

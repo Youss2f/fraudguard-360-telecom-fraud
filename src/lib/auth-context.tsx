@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 
 interface User {
   id: string
@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('/api/auth/me')
+      const response = await fetch("/api/auth/me")
       if (response.ok) {
         const data = await response.json()
         setUser(data.user)
@@ -44,10 +44,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (username: string, password: string) => {
     try {
       setIsLoading(true)
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, password }),
       })
@@ -58,10 +58,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user)
         return { success: true }
       } else {
-        return { success: false, error: data.error || 'Login failed' }
+        return { success: false, error: data.error || "Login failed" }
       }
     } catch (error) {
-      return { success: false, error: 'Network error' }
+      return { success: false, error: "Network error" }
     } finally {
       setIsLoading(false)
     }
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' })
+      await fetch("/api/auth/logout", { method: "POST" })
     } catch (error) {
       // Handle error silently
     } finally {
@@ -87,20 +87,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated: !!user,
     login,
     logout,
-    checkAuth
+    checkAuth,
   }
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
   const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    throw new Error("useAuth must be used within an AuthProvider")
   }
   return context
 }

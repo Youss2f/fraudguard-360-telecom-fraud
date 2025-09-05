@@ -1,15 +1,15 @@
-import winston from 'winston'
-import { NextRequest } from 'next/server'
+import winston from "winston"
+import { NextRequest } from "next/server"
 
 // Logger configuration
-const LOG_LEVEL = process.env.LOG_LEVEL || 'info'
-const LOG_FILE_PATH = process.env.LOG_FILE_PATH || './logs/app.log'
-const ENABLE_FILE_LOGGING = process.env.ENABLE_FILE_LOGGING !== 'false'
-const ENABLE_CONSOLE_LOGGING = process.env.ENABLE_CONSOLE_LOGGING !== 'false'
+const LOG_LEVEL = process.env.LOG_LEVEL || "info"
+const LOG_FILE_PATH = process.env.LOG_FILE_PATH || "./logs/app.log"
+const ENABLE_FILE_LOGGING = process.env.ENABLE_FILE_LOGGING !== "false"
+const ENABLE_CONSOLE_LOGGING = process.env.ENABLE_CONSOLE_LOGGING !== "false"
 
 // Create logs directory if it doesn't exist
-import { existsSync, mkdirSync } from 'fs'
-import { dirname } from 'path'
+import { existsSync, mkdirSync } from "fs"
+import { dirname } from "path"
 
 if (ENABLE_FILE_LOGGING) {
   const logDir = dirname(LOG_FILE_PATH)
@@ -39,10 +39,7 @@ const transports: winston.transport[] = []
 if (ENABLE_CONSOLE_LOGGING) {
   transports.push(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      ),
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
     })
   )
 }
@@ -72,13 +69,13 @@ export function logRequest(request: NextRequest, additionalData?: Record<string,
   const requestData = {
     method: request.method,
     url: request.url,
-    userAgent: request.headers.get('user-agent'),
-    ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip'),
+    userAgent: request.headers.get("user-agent"),
+    ip: request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip"),
     timestamp: new Date().toISOString(),
     ...additionalData,
   }
 
-  logger.info('API Request', requestData)
+  logger.info("API Request", requestData)
   return requestData
 }
 
@@ -97,9 +94,9 @@ export function logResponse(
   }
 
   if (status >= 400) {
-    logger.error('API Error Response', responseData)
+    logger.error("API Error Response", responseData)
   } else {
-    logger.info('API Response', responseData)
+    logger.info("API Response", responseData)
   }
 }
 
@@ -121,15 +118,15 @@ export function logDatabaseOperation(
   }
 
   if (success) {
-    logger.debug('Database Operation', logData)
+    logger.debug("Database Operation", logData)
   } else {
-    logger.error('Database Operation Failed', logData)
+    logger.error("Database Operation Failed", logData)
   }
 }
 
 // Authentication logging
 export function logAuthEvent(
-  event: 'LOGIN' | 'LOGOUT' | 'TOKEN_REFRESH' | 'AUTH_FAILURE',
+  event: "LOGIN" | "LOGOUT" | "TOKEN_REFRESH" | "AUTH_FAILURE",
   userId?: string,
   username?: string,
   ip?: string,
@@ -146,17 +143,17 @@ export function logAuthEvent(
     ...additionalData,
   }
 
-  if (event === 'AUTH_FAILURE') {
-    logger.warn('Authentication Event', logData)
+  if (event === "AUTH_FAILURE") {
+    logger.warn("Authentication Event", logData)
   } else {
-    logger.info('Authentication Event', logData)
+    logger.info("Authentication Event", logData)
   }
 }
 
 // Security event logging
 export function logSecurityEvent(
   event: string,
-  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL',
+  severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
   details: Record<string, any>,
   request?: NextRequest
 ) {
@@ -164,26 +161,22 @@ export function logSecurityEvent(
     event,
     severity,
     details,
-    ip: request?.headers.get('x-forwarded-for') || request?.headers.get('x-real-ip'),
-    userAgent: request?.headers.get('user-agent'),
+    ip: request?.headers.get("x-forwarded-for") || request?.headers.get("x-real-ip"),
+    userAgent: request?.headers.get("user-agent"),
     timestamp: new Date().toISOString(),
   }
 
-  if (severity === 'CRITICAL' || severity === 'HIGH') {
-    logger.error('Security Event', logData)
-  } else if (severity === 'MEDIUM') {
-    logger.warn('Security Event', logData)
+  if (severity === "CRITICAL" || severity === "HIGH") {
+    logger.error("Security Event", logData)
+  } else if (severity === "MEDIUM") {
+    logger.warn("Security Event", logData)
   } else {
-    logger.info('Security Event', logData)
+    logger.info("Security Event", logData)
   }
 }
 
 // Performance monitoring
-export function logPerformance(
-  operation: string,
-  duration: number,
-  metadata?: Record<string, any>
-) {
+export function logPerformance(operation: string, duration: number, metadata?: Record<string, any>) {
   const logData = {
     operation,
     duration: `${duration}ms`,
@@ -191,33 +184,34 @@ export function logPerformance(
     timestamp: new Date().toISOString(),
   }
 
-  if (duration > 5000) { // Slow operation (>5s)
-    logger.warn('Slow Operation', logData)
-  } else if (duration > 1000) { // Moderate operation (>1s)
-    logger.info('Performance', logData)
+  if (duration > 5000) {
+    // Slow operation (>5s)
+    logger.warn("Slow Operation", logData)
+  } else if (duration > 1000) {
+    // Moderate operation (>1s)
+    logger.info("Performance", logData)
   } else {
-    logger.debug('Performance', logData)
+    logger.debug("Performance", logData)
   }
 }
 
 // Error logging with context
-export function logError(
-  error: Error | string,
-  context: string,
-  additionalData?: Record<string, any>
-) {
+export function logError(error: Error | string, context: string, additionalData?: Record<string, any>) {
   const errorData = {
     context,
-    error: error instanceof Error ? {
-      message: error.message,
-      stack: error.stack,
-      name: error.name,
-    } : error,
+    error:
+      error instanceof Error
+        ? {
+            message: error.message,
+            stack: error.stack,
+            name: error.name,
+          }
+        : error,
     ...additionalData,
     timestamp: new Date().toISOString(),
   }
 
-  logger.error('Application Error', errorData)
+  logger.error("Application Error", errorData)
 }
 
 // Business logic logging
@@ -237,7 +231,7 @@ export function logBusinessEvent(
     timestamp: new Date().toISOString(),
   }
 
-  logger.info('Business Event', logData)
+  logger.info("Business Event", logData)
 }
 
 // Fraud detection logging
@@ -258,16 +252,16 @@ export function logFraudEvent(
   }
 
   if (riskScore > 80) {
-    logger.warn('High Risk Fraud Alert', logData)
+    logger.warn("High Risk Fraud Alert", logData)
   } else {
-    logger.info('Fraud Alert', logData)
+    logger.info("Fraud Alert", logData)
   }
 }
 
 // System health logging
 export function logSystemHealth(
   component: string,
-  status: 'healthy' | 'degraded' | 'unhealthy',
+  status: "healthy" | "degraded" | "unhealthy",
   metrics?: Record<string, any>
 ) {
   const logData = {
@@ -277,12 +271,12 @@ export function logSystemHealth(
     timestamp: new Date().toISOString(),
   }
 
-  if (status === 'unhealthy') {
-    logger.error('System Health', logData)
-  } else if (status === 'degraded') {
-    logger.warn('System Health', logData)
+  if (status === "unhealthy") {
+    logger.error("System Health", logData)
+  } else if (status === "degraded") {
+    logger.warn("System Health", logData)
   } else {
-    logger.info('System Health', logData)
+    logger.info("System Health", logData)
   }
 }
 
@@ -295,21 +289,18 @@ export function createTimer() {
 }
 
 // Middleware wrapper for automatic request/response logging
-export function withLogging<T extends any[], R>(
-  operation: string,
-  handler: (...args: T) => Promise<R>
-) {
+export function withLogging<T extends any[], R>(operation: string, handler: (...args: T) => Promise<R>) {
   return async (...args: T): Promise<R> => {
     const timer = createTimer()
-    
+
     try {
       logger.debug(`Starting ${operation}`)
       const result = await handler(...args)
       const duration = timer.end()
-      
+
       logPerformance(operation, duration)
       logger.debug(`Completed ${operation}`, { duration: `${duration}ms` })
-      
+
       return result
     } catch (error) {
       const duration = timer.end()

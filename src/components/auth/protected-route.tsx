@@ -1,10 +1,10 @@
 "use client"
 
-import { ReactNode } from 'react'
-import { useAuth } from '@/lib/auth-context'
-import { LoginForm } from './login-form'
-import { Card, CardContent } from '@/components/ui/card'
-import { Shield, Loader2 } from 'lucide-react'
+import { ReactNode } from "react"
+import { useAuth } from "@/lib/auth-context"
+import { LoginForm } from "./login-form"
+import { Card, CardContent } from "@/components/ui/card"
+import { Shield, Loader2 } from "lucide-react"
 
 interface ProtectedRouteProps {
   children: ReactNode
@@ -12,11 +12,7 @@ interface ProtectedRouteProps {
   requiredPermission?: string
 }
 
-export function ProtectedRoute({ 
-  children, 
-  requiredRole, 
-  requiredPermission 
-}: ProtectedRouteProps) {
+export function ProtectedRoute({ children, requiredRole, requiredPermission }: ProtectedRouteProps) {
   const { user, isLoading, isAuthenticated } = useAuth()
 
   // Show loading spinner while checking authentication
@@ -59,9 +55,7 @@ export function ProtectedRoute({
             <p className="text-gray-300 mb-4">
               You don't have the required role ({requiredRole}) to access this resource.
             </p>
-            <p className="text-sm text-gray-400">
-              Current role: {user?.role}
-            </p>
+            <p className="text-sm text-gray-400">Current role: {user?.role}</p>
           </CardContent>
         </Card>
       </div>
@@ -81,9 +75,7 @@ export function ProtectedRoute({
             <p className="text-gray-300 mb-4">
               You don't have the required permission ({requiredPermission}) to access this resource.
             </p>
-            <p className="text-sm text-gray-400">
-              Available permissions: {user?.permissions?.join(', ') || 'None'}
-            </p>
+            <p className="text-sm text-gray-400">Available permissions: {user?.permissions?.join(", ") || "None"}</p>
           </CardContent>
         </Card>
       </div>

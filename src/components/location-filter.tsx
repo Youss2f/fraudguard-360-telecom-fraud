@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, ChevronsUpDown } from 'lucide-react'
+import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
@@ -9,8 +9,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Badge } from "@/components/ui/badge"
 
 const locations = [
-  "NYC_001_A", "NYC_002_B", "NYC_003_C", "BRK_001_A", "QNS_001_A",
-  "MAN_001_B", "BRX_001_C", "SI_001_A"
+  "NYC_001_A",
+  "NYC_002_B",
+  "NYC_003_C",
+  "BRK_001_A",
+  "QNS_001_A",
+  "MAN_001_B",
+  "BRX_001_C",
+  "SI_001_A",
 ]
 
 interface LocationFilterProps {
@@ -23,7 +29,7 @@ export function LocationFilter({ selectedLocations, onLocationChange }: Location
 
   const handleSelect = (location: string) => {
     const newLocations = selectedLocations.includes(location)
-      ? selectedLocations.filter(l => l !== location)
+      ? selectedLocations.filter((l) => l !== location)
       : [...selectedLocations, location]
     onLocationChange(newLocations)
   }
@@ -31,16 +37,8 @@ export function LocationFilter({ selectedLocations, onLocationChange }: Location
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {selectedLocations.length === 0 
-            ? "Select locations..." 
-            : `${selectedLocations.length} selected`
-          }
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
+          {selectedLocations.length === 0 ? "Select locations..." : `${selectedLocations.length} selected`}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -50,15 +48,9 @@ export function LocationFilter({ selectedLocations, onLocationChange }: Location
           <CommandEmpty>No location found.</CommandEmpty>
           <CommandGroup>
             {locations.map((location) => (
-              <CommandItem
-                key={location}
-                onSelect={() => handleSelect(location)}
-              >
+              <CommandItem key={location} onSelect={() => handleSelect(location)}>
                 <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    selectedLocations.includes(location) ? "opacity-100" : "opacity-0"
-                  )}
+                  className={cn("mr-2 h-4 w-4", selectedLocations.includes(location) ? "opacity-100" : "opacity-0")}
                 />
                 {location}
               </CommandItem>
