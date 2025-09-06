@@ -74,7 +74,7 @@ FraudGuard 360° is a comprehensive, real-time telecom fraud detection system de
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/fraudguard-360-telecom-fraud.git
+   git clone https://github.com/Youss2f/fraudguard-360-telecom-fraud.git
    cd fraudguard-360-telecom-fraud
    ```
 
